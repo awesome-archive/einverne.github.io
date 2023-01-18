@@ -4,7 +4,7 @@ title: "Redis 读书笔记"
 tagline: ""
 description: ""
 category: 学习笔记
-tags: [redis, database, database, key-value, db, ]
+tags: [redis, database, database, key-value, db, reading, ]
 last_updated:
 ---
 
@@ -132,7 +132,7 @@ Redis 由单线程处理所有 client 请求，在接收到 client 发送的命�
 在 multi 开始之后可以使用 `discard` 来取消事务。
 
 ## Redis 的乐观锁
-乐观锁，指的是每次拿数据时认为别人不会修改，不上锁，而在提交更新市判断期间是否有别人更新该数据。
+[[乐观锁]]，指的是每次拿数据时认为别人不会修改，不上锁，而在提交更新时判断期间是否有别人更新该数据。
 
 乐观锁使用数据库版本记录实现，需要满足提交版本必须大于当前记录版本才能执行更新的乐观锁策略。
 
@@ -140,7 +140,7 @@ Redis 从 2.1 版本开始支持乐观锁，可以使用 watch 显式对 key 加
 
 
 
-## 其他
+## Redis Client
 
 phpRedisAdmin 是一个 PHP 实现的 Redis 管理 Web 界面。地址：<https://github.com/erikdubbelboer/phpRedisAdmin>
 

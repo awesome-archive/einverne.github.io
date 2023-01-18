@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "每天学习一个命令：uniq 筛选过滤重复的行"
+aliases: "每天学习一个命令：uniq 筛选过滤重复的行"
 tagline: ""
 description: ""
-category: Linux
+category: 每天学习一个命令
 tags: [uniq, linux, command, awk, sort, ]
 last_updated:
 ---

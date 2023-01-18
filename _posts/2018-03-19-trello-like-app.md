@@ -10,6 +10,11 @@ last_updated:
 
 Trello 是这一年来我发现的为数不多非常好用，并且一直用到现在“好”应用，然而上个礼拜在工作的时候收到一份邮件，是一个内部使用的效率工具，点开一看竟然发现是和 Trello 类似的一个内部规划和管理工具，那个时候就是萌生了写下这样一篇文章的想法。说实话经过一番搜索和调查整理之后发现 Trello 类似的项目真的很多，商业化的，非商业化的，开源的，闭源的，不过追根溯源看板这个概念也并不是 Trello 首创，这个概念本来就来自日本，已经经过多年的实践证明过了的。
 
+## KanbanFlow
+接触 KanbanFlow 是在《[[软技能]]》这本书中，作者也使用 Trello 和 KanbanFlow 来管理自己的待办，KanbanFlow 优于 Trello 的一点是自带了 Pomodoro 番茄时钟。
+
+- <https://kanbanflow.com>
+
 ## Teambition
 这是国内团队做的，看官网是主攻企业和大客户，为公司等等提供定制化服务。
 
@@ -33,6 +38,10 @@ Trello 是这一年来我发现的为数不多非常好用，并且一直用到�
 如果考虑到隐私问题，可以用来私有托管。并且在他们发布的 [1.0 版本](https://blog.wekan.team/2018/05/upcoming-wekan-v1-00-and-platforms/index.html) 中，增加了 Snap, Docker, VirtualBox, 等等快捷安装的方式。
 
 如果想要在线尝试一下，可以访问这里：<https://oasis.sandstorm.io/demo>
+
+在安装 Ubuntu Server 18.04 的时候再一次看到 wekan，然后就顺手体验了一下，虽然外观和 Trello 比起来还是有些距离，但是功能上是已经能够满足日常 90% 的需求了。而 Open Source 最棒的就是，如果用着不开心了，自己干。
+
+当然客观上来讲，目前 (2020 年） Trello 在第三方 API 和界面上还是领先与 Wekan 的，但谁能知道 5 年，10 年后呢。
 
 ## Notion
 单独写了一篇[文章](/post/2019/01/notion.html)，开始的时候竟然漏掉了。

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "SQLAlchemy session 使用问题"
+aliases: "SQLAlchemy session 使用问题"
 tagline: ""
 description: ""
 category: 经验总结
@@ -21,6 +22,8 @@ last_updated:
 而不知什么原因（recyle 了，timeout 了）你的 connection 又死掉了，你的 sqlalchemy 尝试重新连接。由于 transaction 还没完结，无法重连。
 
 **正确用法**是**确保 session 在使用完成后用 session.close, session.commit 或者 session.rollback 把连接还回 pool**。
+
+Session 是一个和数据库交互的会话。在 SQLAlchemy 中使用 Session 来创建和管理数据库连接的会话。
 
 ## SQLAlchemy 数据库连接池使用
 
@@ -108,8 +111,7 @@ Session 不是为了线程安全而设计的，因此确保只在同一个线程
 > the scoped_session() function is provided which produces a thread-managed registry of Session objects. It is commonly used in web applications so that a single global variable can be used to safely represent transactional sessions with sets of objects, localized to a single thread.
 
 
-using transactional=False is one solution, but a better one is to simply rollback(), commit(), or close() the Session when operations are complete - transactional mode (which is called "autocommit=False"  in 0.5) has the advantage that a series of select operations will all
-share the same isolated transactional context..this can be more or less important depending on the isolation mode in effect and the kind of application.
+using `transactional=False` is one solution, but a better one is to simply rollback(), commit(), or close() the Session when operations are complete - transactional mode (which is called "autocommit=False"  in 0.5) has the advantage that a series of select operations will all share the same isolated transactional context..this can be more or less important depending on the isolation mode in effect and the kind of application.
 
 DBAPI has no implicit "autocommit" mode so there is always a transaction implicitly in progress when queries are made.
 
@@ -123,6 +125,13 @@ After this you can reinstate your session.
 
 - flush 预提交，等于提交到数据库内存，还未写入数据库文件；
 - commit 就是把内存里面的东西直接写入，可以提供查询了；
+
+## Session 的生命周期
+
+- Session 被创建，没有和 model 绑定，无状态
+- Session 接受查询语句，执行结果，关联对象到 Session
+- Session 管理对象
+- 一旦 Session 管理的对象有变化，commit 或者 rollback
 
 ## reference
 

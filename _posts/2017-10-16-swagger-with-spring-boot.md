@@ -1,10 +1,11 @@
 ---
 layout: post
-title: "在 Spring Boot 中使用 Swagger"
+title: "在 Spring Boot 中使用 Swagger 生成接口文档"
+aliases: "在 Spring Boot 中使用 Swagger 生成接口文档"
 tagline: ""
 description: ""
 category: 学习笔记
-tags: [Spring, Swagger, Java]
+tags: [spring, spring-boot, swagger, java, restful-api, api-doc, ]
 last_updated:
 ---
 
@@ -12,19 +13,36 @@ last_updated:
 
 Swagger 能根据 Spring Controller 接口自动生成一个文档页面，在代码中使用注解将接口文档注释，非常方便。 Swagger 整合到 Spring boot 项目中也非常方便。
 
+
 ## 添加依赖
+
+io.springfox >= 3.0
+
+```
+<dependency>
+ <groupId>io.springfox</groupId>
+ <artifactId>springfox-boot-starter</artifactId>
+ <version>3.0.0</version>
+</dependency>
+```
+
+访问地址是：<http://localhost:8080/swagger-ui/#/>
+
+
 在 `pom.xml` 中添加
 
-    <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger2</artifactId>
-        <version>2.7.0</version>
-    </dependency>
-    <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger-ui</artifactId>
-        <version>2.7.0</version>
-    </dependency>
+```
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>2.7.0</version>
+</dependency>
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>2.7.0</version>
+</dependency>
+```
 
 最新的版本可以在 [mvnrepository](http://mvnrepository.com/artifact/io.springfox/springfox-swagger2) 上查到，或者上官网或者 github。
 
@@ -64,17 +82,19 @@ Swagger 能根据 Spring Controller 接口自动生成一个文档页面，在�
 
 ## 添加接口注释
 
-@ApiOperation 注解来给 API 增加说明、通过 @ApiImplicitParams、@ApiImplicitParam 注解来给参数增加说明。
+`@ApiOperation` 注解来给 API 增加说明、通过 `@ApiImplicitParams`、`@ApiImplicitParam` 注解来给参数增加说明。
 
 一个简单的注释
 
-    @ApiOperation(value = "创建用户", notes = "根据 User 对象创建用户")
-    @ApiImplicitParam(name = "user", value = "用户详细实体 user", required = true, dataType = "User")
-    @RequestMapping(value = "", method = RequestMethod.POST)
-    public String postUser(@RequestBody User user) {
-        users.put(user.getId(), user);
-        return "success";
-    }
+```
+@ApiOperation(value = "创建用户", notes = "根据 User 对象创建用户")
+@ApiImplicitParam(name = "user", value = "用户详细实体 user", required = true, dataType = "User")
+@RequestMapping(value = "", method = RequestMethod.POST)
+public String postUser(@RequestBody User user) {
+    users.put(user.getId(), user);
+    return "success";
+}
+```
 
 详细的例子可以参考源代码 <https://github.com/einverne/thrift-swift-demo>
 
@@ -86,7 +106,7 @@ Swagger 能根据 Spring Controller 接口自动生成一个文档页面，在�
 - value url
 - description
 - tags 设置该值，value 会被覆盖
-- basePath 基本路劲不可配置
+- basePath 基本路径不可配置
 - position
 - produces "application/json"
 - consumes "application/json"

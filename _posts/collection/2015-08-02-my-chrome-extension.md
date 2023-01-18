@@ -1,45 +1,89 @@
 ---
 layout: post
-title: "我使用的Chrome Extension"
-description: "我使用的Chrome Extension扩展"
+title: "我使用的 Chrome Extension"
+description: "我使用的 Chrome Extension 扩展"
 category: 整理合集
-tags: [Chrome, Google]
+tags: [chrome, google, google-extension, ]
 ---
 
 日常使用备份，另外会单独拿出一列写写[我用的 Userscript](/post/2015/08/userscripts.html)，类似微博去广告，豆瓣页面显示下载链接之类并不会存在这个列表里面。使用这一套扩展的好处有以下几点：
 
 - 使用账号同步，在不同电脑上同步扩展的配置，即使重装系统，所有的扩展配置都能够同步过来
-- 占用内存相对较少，部分扩展使用 Userscript 代替，减少 Chrome 常驻内存
+- 占用内存相对较少，部分扩展使用 [[Userscript]] 代替，减少 Chrome 常驻内存
 
 ![Chrome Extension](https://lh3.googleusercontent.com/-RRQpdKvdFqU/VcC4gutTGRI/AAAAAAAAykw/Ylj6joaSNis/s780-Ic42/78afd21e6cfc0692ea542a5fc1d848d7.jpg)
 
-# 列表：
+## 效率类
 
-## Tampermonkey
-当然他是[神器](http://www.einverne.tk/2013/01/Tampermonkey.html)
-Chrome下，扩展是能够同步的，而脚本我找到了方法也能够同步～～文中有
+## Checker Plus for Gmail
+这是一款检查 Gmail 新邮件的扩展，推送及时，并且可以不离开当前页面查看邮箱内容。
 
-[Tampermonkey The most popular userscript manager for Blink-based browsers](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
+![checker plus for gmail](/assets/checker-plus-for-gmail-in-chrome.png)
 
-## 广告屏蔽
-曾经一度不能区别Adblock(AB)与Adblock Plus(ABP),后来大概了解了一下，可参阅我博客：[http://www.einverne.tk/2013/08/ababp.html](http://www.einverne.tk/2013/08/ababp.html)
-至于后来，我只用Adblock了，为啥？我觉得Adblock更好～～文中有解释
+官方地址：<https://chrome.google.com/webstore/detail/checker-plus-for-gmail/oeopbcgkkoapgobdbedcemjljbihmemj>
 
-[AdBlock. The #1 ad blocker with over 200 million downloads. Blocks YouTube, Facebook and ALL ads by default (unlike Adblock Plus).](https://chrome.google.com/webstore/detail/adblock/gighmmpiobklfepjocnamgkkbiglidom)
+## Checker Plus for Google Calendar
+一款用来检查 Google Calendar 的插件，可以快速的预览 Google Calendar 中的事项，也可以直接创建 Event。
+
+官方地址：<https://chrome.google.com/webstore/detail/checker-plus-for-google-c/hkhggnncdpfibdhinjiegagmopldibha>
+
+上面两个扩展都是一位叫做 [Jason Savard](https://jasonsavard.com/about) 的自由开发者开发的。因为我日常使用这两个网页应用比较多，自然的就找到了这两个扩展，免费版本的功能就已经可以满足 80% 需求，不过我还是小小的支持了一下作者，这可能是我付费的第一，二款 Chrome 扩展。
 
 ## LastPass
 [密码管理](http://www.einverne.tk/2013/04/manage-password.html)
-LastPass甚至可以用来共享密码～～
+LastPass 甚至可以用来共享密码～～
 
 [LastPass: Free Password Manager LastPass, an award-winning password manager, saves your passwords and gives you secure access from every computer and mobile device.](https://chrome.google.com/webstore/detail/lastpass-free-password-ma/hdokiejnpimakedhajhdlcegeplioahd)
+
+## Trello
+Trello 官方的扩展，可以很轻松添加卡片。
+
+官方地址：<https://chrome.google.com/webstore/detail/trello/dmdidbedhnbabookbkpkgomahnocimke>
+
+## Tampermonkey
+当然他是[神器](http://www.einverne.tk/2013/01/Tampermonkey.html)
+Chrome 下，扩展是能够同步的，而脚本我找到了方法也能够同步～～文中有
+
+[Tampermonkey The most popular userscript manager for Blink-based browsers](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
+
+## Vimium
+在浏览页面的时候使用 Vim 的快捷键。
+
+官方地址：<https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb>
+
+## 广告屏蔽
+曾经一度不能区别 Adblock(AB) 与 Adblock Plus(ABP), 后来大概了解了一下，可参阅我博客：[http://www.einverne.tk/2013/08/ababp.html](http://www.einverne.tk/2013/08/ababp.html)
+至于后来，我只用 Adblock 了，为啥？我觉得 Adblock 更好～～文中有解释
+
+[AdBlock. The #1 ad blocker with over 200 million downloads. Blocks YouTube, Facebook and ALL ads by default (unlike Adblock Plus).](https://chrome.google.com/webstore/detail/adblock/gighmmpiobklfepjocnamgkkbiglidom)
+
 
 ## Proxy Switchysharp 已经替换成 Proxy SwitchyOmega
 不解释
 [Proxy SwitchySharp Manage and switch between multiple proxies quickly & easily. Based on "Proxy Switchy!" & "SwitchyPlus"](https://chrome.google.com/webstore/detail/proxy-switchysharp/dpplabbmogkhghncfbfdeeokoefdjegm)
 
-目前已经替换成[Proxy SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)
+目前已经替换成 [Proxy SwitchyOmega](https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif)
+
+## PT Plugin Plus
+一个 PT 站点的管理工具，因为没有上架 Web Store 所以只能自己编译，加载安装。
+
+- <https://github.com/ronggang/PT-Plugin-Plus>
+
+## Plus for Trello
+Trello 的扩展，可以对每一个卡片进行计时。
+
+官方地址：<https://chrome.google.com/webstore/detail/plus-for-trello-time-trac/gjjpophepkbhejnglcmkdnncmaanojkf>
+
+## bypass paywalls
+用来绕过付费墙。
+
+- <https://github.com/iamadamdev/bypass-paywalls-chrome>
 
 ## 印象笔记·剪藏
+2020 年更新
+
+目前我已经不再使用 Evernote，所以也放弃了使用 Evernote 的剪藏。现在推荐 WizNote 或者 Joplin 的剪藏。
+
 Evernote，千万记住用国际版
 
 [Evernote Web Clipper Use the Evernote extension to save things you see on the web into your Evernote account.](https://chrome.google.com/webstore/detail/evernote-web-clipper/pioclpoplcdbaefihamjohnefbikjilc)
@@ -55,8 +99,11 @@ Evernote，千万记住用国际版
 [User-Agent Switcher User-Agent Switcher is a quick and easy way to switch between user-agents.](https://chrome.google.com/webstore/detail/user-agent-switcher/ffhkkpnppgnfaobgihpdblnhmmbodake)
 
 ## 扇贝网查词助手 已弃用
+目前转用 GoldenDict，是操作系统级别的查词，所以也放弃了这个插件。
+
 查词，wiki
-[扇贝网查词助手 扇贝网查词Chrome扩展，查词更方便。](https://chrome.google.com/webstore/detail/%E6%89%87%E8%B4%9D%E7%BD%91%E6%9F%A5%E8%AF%8D%E5%8A%A9%E6%89%8B/mifikcalbnghhhlngmdfpfnlihcbhmnp)
+
+[扇贝网查词助手 扇贝网查词 Chrome 扩展，查词更方便。](https://chrome.google.com/webstore/detail/%E6%89%87%E8%B4%9D%E7%BD%91%E6%9F%A5%E8%AF%8D%E5%8A%A9%E6%89%8B/mifikcalbnghhhlngmdfpfnlihcbhmnp)
 
 ## Image Downloader
 批量下载图片
@@ -80,17 +127,19 @@ InoReader 不解释
 
 
 ## 远方 New Tab
-美化新建页面
+在新建的标签页上显示随机的美景。
 
 [Dream Afar New Tab An unexpected trip everyday by simply opening a new tab](https://chrome.google.com/webstore/detail/dream-afar-new-tab/henmfoppjjkcencpbjaigfahdjlgpegn)
 
-# 以下Chrome App
+这个扩展看上去从 WebStore 下线了，永久的停留在了 0.3.12_0 版本。
 
-## Hangouts
+## 以下 Chrome App
+
+### Hangouts
 Hangouts 推荐使用 App 版本，看样子 Google 应该会重点发展 App 版的 Hangouts
 [Always stay connected with the new desktop app for Hangouts on ChromeOS and Windows.](https://chrome.google.com/webstore/detail/hangouts/knipolnnllmklapflnccelgolnpehhpl)
 
-## Google Keep 已经弃用，使用Evernote完全代替
+## Google Keep 已经弃用，使用 Evernote 完全代替
 Google Keep - notes and lists
 Quickly capture what's on your mind and share those thoughts with friends and family.
 

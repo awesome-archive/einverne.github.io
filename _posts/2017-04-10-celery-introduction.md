@@ -8,7 +8,7 @@ tags: [celery, python, queue, task, distribution]
 last_updated:
 ---
 
-Celery 简单来说就是一个分布式消息队列。简单、灵活且可靠，能够处理大量消息，它是一个专注于实时处理的任务队列，同时也支持异步任务调度。Celery 不仅可以单机运行，也能够同时在多台机器上运行，甚至可以跨数据中心。
+Celery 简单来说就是一个分布式[[消息队列]]。简单、灵活且可靠，能够处理大量消息，它是一个专注于实时处理的任务队列，同时也支持异步任务调度。Celery 不仅可以单机运行，也能够同时在多台机器上运行，甚至可以跨数据中心。
 
 Celery 中比较关键的概念：
 
@@ -172,6 +172,24 @@ Celery 同样也支持定时任务：
     app.control.purge()
 
 From：[stackoverflow](https://stackoverflow.com/a/7155348/1820217)
+
+## celery 在 supervisor 中 root 不能启动问题
+Celery 不能用 root 用户启动，所以在 supervisor 中启动时会报错：
+
+    If you really want to continue then you have to set the C_FORCE_ROOT
+    environment variable (but please think about this before you do).
+
+    User information: uid=0 euid=0 gid=0 egid=0
+
+解决办法
+
+    from celery import Celery, platforms
+    platforms.C_FORCE_ROOT = True
+
+或者 supervisor 配置中
+
+    environment=C_FORCE_ROOT="true"
+
 
 ## reference
 

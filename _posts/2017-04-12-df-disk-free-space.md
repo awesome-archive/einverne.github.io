@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "每天学习一个命令：df 查看磁盘剩余空间"
+aliases: "每天学习一个命令：df 查看磁盘剩余空间"
 tagline: ""
 description: ""
-category: Linux
+category: 每天学习一个命令
 tags: [linux, df, disk, 磁盘空间 , command, ]
 last_updated:
 ---
@@ -30,7 +31,7 @@ df 全称 disk filesystem，用于显示 Linux 系统磁盘利用率，通常也
     --no-sync 忽略 sync 命令
     -P      输出格式为 POSIX
     --sync  在取得磁盘信息前，先执行 sync 命令
-    -T      文件系统类型
+    -T      展示文件系统类型，比如 ext4, tmpfs, 等等
 
 ## 使用实例
 
@@ -138,6 +139,26 @@ df 命令输出：
 ## 相关
 
 查看磁盘占用 [du](/post/2018/03/du-find-out-which-fold-take-space.html)
+
+## 外延
+假如你的 250G 的系统盘即将存满，下面的方式可以缓解一下硬盘压力。
+
+移除不再使用的 package
+
+	sudo apt autoremove
+	sudo apt-get autoclean
+
+查看系统日志占用：
+
+	journalctl --disk-usage
+	sudo journalctl --vacuum-time=3d
+
+
+查看 SNAP 占用
+
+	du -h /var/lib/snapd/snaps
+	snap list --all
+	snap remove some-package
 
 ## reference
 

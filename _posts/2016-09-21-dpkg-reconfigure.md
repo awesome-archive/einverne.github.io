@@ -3,7 +3,7 @@ layout: post
 title: "每天学习一个命令：dpkg-reconfigure 命令重新配置软件包"
 tagline: ""
 description: ""
-category: Linux
+category: 每天学习一个命令
 tags: [linux, dpkg-reconfigure, debian, ubuntu, linux-mint, ]
 last_updated:
 ---
@@ -25,4 +25,6 @@ last_updated:
     sudo dpkg-reconfigure lightdm
     sudo dpkg-reconfigure mdm
 
+配置时区
 
+    sudo dpkg-reconfigure tzdata

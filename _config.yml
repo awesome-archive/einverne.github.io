@@ -6,6 +6,9 @@ exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "
 paginate: 10
 description_length: 200
 markdown: kramdown
+kramdown:
+  syntax_highlighter_opts:
+    default_lang: plaintext
 encoding: UTF-8
 highlighter: rouge
 
@@ -13,12 +16,12 @@ highlighter: rouge
 # so be sure to set them if your theme uses them.
 #
 title : Verne in GitHub
-tagline: Heal the World
+tagline: 学习笔记、经验总结、产品体验
 image: https://lh5.googleusercontent.com/-hnukhkmD--I/V4m8XAu5yCI/AAAAAAABAAE/M4l0oJTVFoIOZoY4hSG7-rgFwbgym5H5wCL0B/w512-h439-no/IMG_20160715_125428.jpg
 repo_url: https://github.com/einverne/einverne.github.io
 author :
   name : Ein Verne
-  email : ein.verne@gmail.com
+  email : git@einverne.info
   google : EinVerne
   github : einverne
   twitter : einverne
@@ -32,7 +35,7 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : https://einverne.github.io
+production_url : https://blog.einverne.info
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
@@ -100,8 +103,6 @@ JB :
       num_posts: 5
       width: 580
       colorscheme: light
-    duoshuo :
-      short_name : jekyllbootstrap
 
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
@@ -140,9 +141,10 @@ JB :
   #   ./_includes/custom/[HELPER]
   # where [HELPER] is the name of the helper you are overriding.
 
-gems:
+plugins:
   - jekyll-paginate
 #- jemoji
 #- jekyll-mentions
   - jekyll-sitemap
   - jekyll-feed
+  - jekyll-redirect-from

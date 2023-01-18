@@ -21,11 +21,6 @@
             {{ content }}
         </div>
 
-        <div id="share">
-          <h2>Share</h2>
-          <div class="social-share" data-disabled="qq,qzone,tencent,weibo,diandian"></div>
-        </div>
-
         <div id="related">
             <h2>Related Posts</h2>
             <ul class="posts"><!--当一篇文章有两个tag一样时显示-->
@@ -41,11 +36,6 @@
                 {% endif %}
                 {% endfor %}
             </ul>
-        </div>
-
-        <div id="qr">
-            <div id="qrcode"></div>
-            扫描二维码在移动设备查看
         </div>
 
         <hr>
@@ -66,6 +56,9 @@
             </ul>
         </nav>
         <hr>
+
+        如果要使用 Remark42 进行评论确保访问的域名为 <a href="https://blog.einverne.info">https://blog.einverne.info</a> 或者点击 <a href="https://blog.einverne.info{{ page.url }}" target="_self">这里</a>评论。
+        <div id="remark42"></div>
 
         {% include JB/comments %}
         <blockquote><p class="quote"></p></blockquote>
@@ -88,7 +81,6 @@
         </ul>
         {% endunless %}
         <div id="floatbox">
-            <div class="g-plusone" data-annotation="inline" data-width="300"></div>
             <div id="post-directory-module">
                 <div id="toc"></div>
             </div>
@@ -116,7 +108,7 @@
 //            });
 //        }
 
-        $.getJSON('/quotes.json', function (data) {
+        $.getJSON('https://my-worker.einverne.workers.dev/', function (data) {
             var rand = Math.floor(Math.random() * data.quotes.length);
             var entry = data.quotes[rand].quote + "    --" + data.quotes[rand].name;
             $('.quote').text(entry);
@@ -129,3 +121,18 @@
         });
     });
 </script>
+
+<script>
+    var remark_config = {
+        host: "https://remark.einverne.info",
+        site_id: 'verneingithub',
+        components: ['embed'],
+        max_shown_comments: 10,
+        theme: 'light',
+        page_title: 'EV博客评论',
+        locale: 'zh',
+        show_email_subscription: true,
+        simple_view: false
+    };
+</script>
+<script>!function(e,n){for(var o=0;o<e.length;o++){var r=n.createElement("script"),c=".js",d=n.head||n.body;"noModule"in r?(r.type="module",c=".mjs"):r.async=!0,r.defer=!0,r.src=remark_config.host+"/web/"+e[o]+c,d.appendChild(r)}}(remark_config.components||["embed"],document);</script>

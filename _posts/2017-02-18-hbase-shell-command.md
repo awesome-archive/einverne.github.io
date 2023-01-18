@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "HBase 命令行工具"
+aliases: "HBase 命令行工具"
 tagline: ""
 description: "HBase 命令行工具"
 category: 学习笔记
@@ -132,7 +133,7 @@ alter 修改表的结构，新增列族，删除列族。在修改之前要先 d
 
 ### 增加记录
 
-put 命令
+使用 put 命令插入数据
 
 插入数据，对于同一个 rowkey，如果执行两次 put，则认为是更新操作
 
@@ -205,9 +206,7 @@ delete 命令删除表中数据，delete 命令只能用来删除某一列。
 
 ### 全表扫描
 
-scan
-
-全表扫描
+使用 scan 命令全表扫描
 
     hbase(main):043:0> scan 'test', {VERSIONS => 12}
     ROW           				COLUMN+CELL

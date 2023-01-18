@@ -3,38 +3,51 @@ layout: post
 title: "每天学习一个命令：使用 rsync 增量同步备份文件"
 tagline: ""
 description: ""
-category: Linux
+category: 每天学习一个命令
 tags: [linux, rsync, scp, sync, command, ]
 last_updated:
 ---
 
-rsync 全名 Remote Sync，是类 unix 系统下的数据镜像备份工具。
+rsync 全名 Remote Sync，是类 UNIX 系统下的数据镜像备份工具。可以方便的实现本地，远程备份，rsync 提供了丰富的选项来控制其行为。rsync 优于其他工具的重要一点就是支持增量备份。
 
 > rsync - a fast, versatile, remote (and local) file-copying tool
 
 rsync 是一个功能非常强大的工具，其命令也有很多功能选项，它的特性如下：
 
-- 可以从远程或者本地镜像保存整个目录树和文件系统
 - 可以保持文件原来的权限、时间、所有者、组信息、软硬链接等等
-- 无须特殊权限即可安装
+- 可以从远程或者本地镜像保存整个目录树和文件系统
+- 无须特殊权限 super-user 即可安装使用
 - 快速：要比 scp (Secure Copy) 要快；第一次同步时 rsync 会复制全部内容，但在下一次只传输修改过的文件。rsync 在传输数据的过程中可以实行压缩及解压缩操作，可以使用更少的带宽
 - 安全：可以使用 scp、ssh 等方式来传输文件，当然也可以通过直接的 socket 连接
 - 支持匿名传输，以方便进行网站镜像
 
-rysnc 的官方网站：<http://rsync.samba.org/>，可以从上面得到最新的版本。
+rsync 的官方网站：<http://rsync.samba.org/>，可以从上面得到最新的版本。
 
 ## rsync 的使用
 
 Rsync 的命令格式可以为以下六种：
 
-	rsync [OPTION]... SRC DEST
-	rsync [OPTION]... SRC [USER@]HOST:DEST
-	rsync [OPTION]... [USER@]HOST:SRC DEST
-	rsync [OPTION]... [USER@]HOST::SRC DEST
-	rsync [OPTION]... SRC [USER@]HOST::DEST
-	rsync [OPTION]... rsync://[USER@]HOST[:PORT]/SRC [DEST]
+    # 本地模式
+	rsync [OPTION...] SRC DEST
+    # 远程 Push
+	rsync [OPTION...] SRC [USER@]HOST:DEST
+    # 远程 Pull
+	rsync [OPTION...] [USER@]HOST:SRC DEST
+    # 通过 Rsync daemon Pull
+	rsync [OPTION...] [USER@]HOST::SRC DEST
+    rsync [OPTION...] rsync://[USER@]HOST[:PORT]/SRC... [DEST]
+    # 通过 Rsync daemon Push
+	rsync [OPTION...] SRC [USER@]HOST::DEST
+	rsync [OPTION...] SRC... rsync://[USER@]HOST[:PORT]/DEST
 
-上述命令中，我们认为 SRC 表示源地址，而 DEST 表示目标地址，这二者可以是本地目录，也可以是远程服务器地址。
+上述命令中，SRC 表示源地址，而 DEST 表示目标地址，这二者可以是本地目录，也可以是远程服务器地址。当只有 SRC 地址没有 DEST 时会列出所有的文件列表，而不会执行拷贝。
+
+rsync 有两种方式来连接远程服务器
+
+- 使用 remote shell 程序，比如 ssh 或者 rsh
+- 或者直接通过 TCP 来连接 daemon
+
+这两种方式的直接区别体现在路径中的冒号 (:) ，当只有一个冒号时使用 remote shell，当有两个冒号时使用 daemon 连接。
 
 rsync 有六种不同的工作模式：
 
@@ -55,6 +68,7 @@ rsync 有六种不同的工作模式：
 	-a 	归档模式，递归方式传输文件，并保持连接，权限，用户和组，时间信息
 	-z  压缩文件传输
 	-h  human-readable, 输出友好
+	-u  跳过已经存在的文件，备份更新
 
 rsync 参数的具体解释如下：
 
@@ -126,11 +140,11 @@ rsync 参数的具体解释如下：
 
 	rsync -avzh /home/src /backups/files/
 
-将 `/home/src` 目录下的文件同步发送到 `/backups/files` 目录下。记住如果目标地址没有 `src` 目录，rsync 会自动创建改文件夹。
+将 `/home/src` 目录下的文件同步发送到 `/backups/files` 目录下。记住如果目标地址没有 `src` 目录，rsync 会自动创建该文件夹。
 
 	rsync -avz /home/src/ /backups/files/
 
-SRC 路径末尾的 `/` 表示不自动创建 DEST 文件夹，在 `man rsync` 中的解释就是末尾的 `/` 表示"拷贝当前目录下的文件" ，而不是”拷贝当前的目录“，
+SRC 路径末尾的 `/` 表示不自动创建 DEST 文件夹，在 `man rsync` 中的解释就是末尾的 `/` 表示"拷贝当前目录下的文件" ，而不是"拷贝当前的目录".
 
 ### 远程 shell 拷贝到远程
 使用一个远程 shell 程序（如 rsh、ssh) 来实现将本地机器的内容拷贝到远程机器。当 DES 路径地址包含单个冒号":"分隔符时启动该模式。
@@ -159,12 +173,12 @@ SRC 路径末尾的 `/` 表示不自动创建 DEST 文件夹，在 `man rsync` �
 
     rsync -v rsync://remoteip /www
 
-### rsync 使用更改端口
-经常遇见的一种情况就是 ssh 更改了默认 22 端口，这个时候使用 `-e` 参数即可。
+### rsync 使用非标准端口
+经常遇见的一种情况就是 ssh 更改了默认 22 端口，这个时候就需要使用 `-e` 参数。
 
 rsync 有两种常用的认证方式，一种为 rsync-daemon 方式，另外一种则是 ssh。
 
-ssh 一般为首选，但当远端服务器的 ssh 默认端口被修改后，rsync 时找不到一个合适的方法来输入对方 ssh 服务端口号。
+ssh 一般为首选，但当远端服务器的 ssh 默认端口被修改后，rsync 找不到一个合适的方法来输入对方 ssh 服务端口号。
 
 比如现在向机器 remoteip 传送文件，但此时 remoteip 的 ssh 端口已经不是默认的 22 端口。
 
@@ -194,7 +208,17 @@ rsync 中的命令 参数 `-e, --rsh=COMMAND` 指定使用 rsh、ssh 方式进�
 
 	rsync --remove-source-files -zvh backup.tar /tmp/backups/
 
+需要注意的是 `rsync` 使用 `--remove-source-files` 之后源文件同步之后会被删除，但是源文件所在的文件夹是不会被删除的，可以通过如下命令删除空文件夹：
+
+    find . -depth -type d -empty -delete
+
+### 同步过程中删除远程中已经在本地删除的文件
+使用 `--delete` 选项。
+
+    rsync -avh --delete /path/to/local root@remote:/path/to/remote
+
 ### 设置备份带宽
+`--bwlimit=RATE` 选项允许用户指定最大传输速率，RATE 值可以是字符串也可以是数值，如果是字符串，比如 `--bwlimit=1.5m` 表示每秒最高传输速率 1.5m，如果没有后缀那么单位是 1024 bytes。
 
 	rsync --bwlimit=100 -avzhe ssh /var/lib/rpm/ root@remoteip:/root/tmprpm/
 

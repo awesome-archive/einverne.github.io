@@ -5,10 +5,10 @@ tagline: ""
 description: ""
 category: 学习笔记
 tags: [linux, nodejs, npm, js, javascript, ]
-last_updated: 
+last_updated:
 ---
 
-nodejs 安装其实非常简单，大部分情况下 Debian/Ubuntu 下只要使用包管理直接安装 
+nodejs 安装其实非常简单，大部分情况下 Debian/Ubuntu 下只要使用包管理直接安装
 
 	sudo apt-get install nodejs
 	sudo apt-get install npm
@@ -23,7 +23,9 @@ nodejs 安装其实非常简单，大部分情况下 Debian/Ubuntu 下只要使�
     curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 	sudo apt-get install -y nodejs
 
-也是网络环境无法安装
+也是网络环境无法安装。
+
+更加详细的可以参考[官网](https://nodejs.org/en/download/package-manager/)
 
 ## 二进制安装
 所以使用 二进制 安装
@@ -43,3 +45,7 @@ nodejs 安装其实非常简单，大部分情况下 Debian/Ubuntu 下只要使�
 	npm -v
 
 输出即可。
+
+## reference
+
+- <https://github.com/nodesource/distributions/blob/master/README.md>

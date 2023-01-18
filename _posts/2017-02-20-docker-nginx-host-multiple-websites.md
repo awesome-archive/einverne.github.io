@@ -1,6 +1,7 @@
 ---
 layout: post
-title: "Docker 使用 nginx-proxy 来假设多个网站"
+title: "Docker 使用 nginx-proxy 来架设多个网站"
+aliases: "Docker 使用 nginx-proxy 来架设多个网站"
 tagline: ""
 description: ""
 category: 学习笔记
@@ -39,6 +40,8 @@ last_updated:
           name: nginx-proxy
 
 然后在同目录下 `docker-compose up -d`
+
+Nginx Proxy Manager 的管理面板在 81 端口，默认的用户名和密码是 `admin@example.com` 和 `changeme`。
 
 nginx-proxy 对外暴露 80 端口，并且监听 80 端口，允许 80 端口的流量流入。而 `/var/run/docker.sock:/tmp/docker.sock` 这一行则表示着允许该容器访问宿主机器的 Docker socket，这也就意味着有新容器加入，或者新容器关闭时都会通知到 nginx-proxy。
 
@@ -97,6 +100,11 @@ nginx-proxy 对外暴露 80 端口，并且监听 80 端口，允许 80 端口�
 
 ## 扩展
 如果想要支持 SSL，那么 `nginx-proxy` 有一个对应的项目 [letsencrypt-nginx-proxy-companion](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion)，他可以自动创建和续签 Let's Encrypt 的证书。
+
+## 延展阅读
+
+- [Nginx Proxy Manager](https://nginxproxymanager.com/)
+- [docker-swag](https://github.com/linuxserver/docker-swag)，或者 [LinuxServer 网站指南](https://docs.linuxserver.io/general/swag)
 
 ## reference
 

@@ -8,15 +8,27 @@ tags: [mysql, database, linux]
 last_updated:
 ---
 
-mysql 命令行操作相关内容，防止遗忘。mysql 常用命令记录，总结。
+MySQL 命令行操作相关内容，防止遗忘。MySQL 常用命令记录，总结。
 
-## install
+## 安装 {#install}
 
 Under Ubuntu
 
+	sudo apt update
     sudo apt-get install mysql-server
+	sudo mysql_secure_installation
 
-## 启动停止 mysql 服务
+如果安装过程中没有弹出设置密码的对话，那么可以在安装完成后执行：
+
+	sudo mysql_secure_installation
+
+来设置密码，及一些安全的设置。之后就可以用
+
+	sudo mysql -u root -p
+
+来登录。
+
+## 启动停止 MySQL 服务
 可以使用如下命令启动，停止，重启 MySQL 服务
 
 	sudo /etc/init.d/mysql {start | stop | status | restart}
@@ -114,7 +126,7 @@ Windows 下可以使用 net 命令
 
 删除列
 
-	ALTER TABLE table_name **DROP** column
+	ALTER TABLE table_name DROP column
 
 修改列，或者修改列类型
 
@@ -133,7 +145,12 @@ Windows 下可以使用 net 命令
 
 修改表名
 
-    ALTER TABLE origin_table_name **RENAME TO** new_table_name
+    ALTER TABLE origin_table_name RENAME TO new_table_name
+
+修改自增ID：
+
+    ALTER TABLE table_name AUTO_INCREMENT = 1000;
+
 
 ### 增删改查
 Like 通配符
@@ -195,9 +212,11 @@ Order 可以使用 `DESC`, `ASC`
 
 	SELECT User,Host FROM mysql.user;
 
-创建新用户
+创建新用户：
 
 	CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+
+记住这里的 localhost，可以替换成客户端的 IP，或者任何要需要授权访问的 IP 地址。
 
 创建新用户时，如果密码选择太简单可能会导致密码安全检查无法过去，这时可以设置 MySQL 的 `validate_password_policy` 来使用简单密码：
 
@@ -215,13 +234,18 @@ Order 可以使用 `DESC`, `ASC`
 
 	GRANT ALL ON [database].* TO 'user'@'localhost';
 
+授予某个用户全部的权限：
+
+	GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost' WITH GRANT OPTION;
+
+
 修改密码
 
 	mysqladmin -u root -p old_password password new_password
 
 删除用户
 
-	DROP USER ‘user1’@‘localhost';
+	DROP USER 'user1'@'localhost';
 
 如果在创建新用户时提醒密码 weak，则可以使用如下命令来禁用密码校验
 
@@ -232,6 +256,11 @@ Order 可以使用 `DESC`, `ASC`
 将表从一个 schema 中移动到另外的 schema 中
 
     alter table old_db.table_name rename new_db.table_name
+
+
+### mysql in Batch Mode
+
+    mysql -h host -u user -p < batch-file
 
 ## 远程连接
 如果想要远程通过 root 连接 MySQL，先查看一下 MySQL 配置 `/etc/mysql.my.cnf`，需要注释其中
@@ -246,6 +275,100 @@ Order 可以使用 `DESC`, `ASC`
 	mysql>use mysql;
 	mysql>update user set host = '%' where user = 'root';
 	mysql>select host, user from user;
+
+
+## ERROR 1819 HY000 Your password does not satisfy the current policy requirements
+
+可以通过如下语句查看 MySQL 密码规则：
+
+	SHOW VARIABLES LIKE 'validate_password%';
+
+	mysql> SHOW VARIABLES LIKE 'validate_password%';
+	+--------------------------------------+--------+
+	| Variable_name                        | Value  |
+	+--------------------------------------+--------+
+	| validate_password_check_user_name    | OFF    |
+	| validate_password_dictionary_file    |        |
+	| validate_password_length             | 8      |
+	| validate_password_mixed_case_count   | 1      |
+	| validate_password_number_count       | 1      |
+	| validate_password_policy             | MEDIUM |
+	| validate_password_special_char_count | 1      |
+	+--------------------------------------+--------+
+	7 rows in set (0.01 sec)
+
+改变密码策略：
+
+	SET GLOBAL validate_password_policy=MEDIUM;        // LOW  MEDIUM HIGH
+	SET GLOBAL validate_password_policy=1;        // Low=0 Medium=1 High=2
+
+
+## Host 'xxx.xx.xxx.xxx' is not allowed to connect to this MySQL server
+通过如下方式创建用户并赋予权限。
+
+	mysql> CREATE USER 'einverne'@'localhost' IDENTIFIED BY 'some_pass';
+	mysql> GRANT ALL PRIVILEGES ON *.* TO 'einverne'@'localhost'
+		->     WITH GRANT OPTION;
+	mysql> CREATE USER 'einverne'@'%' IDENTIFIED BY 'some_pass';
+	mysql> GRANT ALL PRIVILEGES ON *.* TO 'einverne'@'%'
+		->     WITH GRANT OPTION;
+
+	FLUSH PRIVILEGES;
+
+## ERROR 2003 (HY000): Can't connect to MySQL server on 'some host' (113)
+解决问题的思路，看看防火墙是不是开着，检查 MySQL 用户的权限设置是否正确。
+
+
+## ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+一般在新安装之后首次登录的时候会出现这个错误。
+在 Ubuntu 下，MySQL 服务器默认使用了 [UNIX auth socket plugin](https://dev.mysql.com/doc/mysql-security-excerpt/5.5/en/socket-pluggable-authentication.html)，这个时候必须要使用 `sudo mysql -u root -p`
+
+通过如下 SQL 可以看到 root 使用了 `unix_socket` 插件
+
+```
+ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+MariaDB [(none)]> SELECT User, Host, plugin FROM mysql.user;
++------+-----------+-------------+
+| User | Host      | plugin      |
++------+-----------+-------------+
+| root | localhost | unix_socket |
++------+-----------+-------------+
+1 row in set (0.00 sec)
+```
+
+有两种方式可以解决这个问题：
+
+- 使用 `mysql_native_password` 插件来设置 root 用户
+- 创建新的 db_user 用户
+
+### Option 1
+
+    sudo mysql -u root
+    mysql> USE mysql;
+    mysql> UPDATE user set plugin='mysql_native_password' WHERE user='root';
+    mysql>FLUSH PRIVILEGES;
+    mysql>exit
+    
+然后重启服务：
+
+    sudo service mysql restart
+
+### Option 2
+
+```
+$ sudo mysql -u root # I had to use "sudo" since is new installation
+
+mysql> USE mysql;
+mysql> CREATE USER 'YOUR_SYSTEM_USER'@'localhost' IDENTIFIED BY 'YOUR_PASSWD';
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'YOUR_SYSTEM_USER'@'localhost';
+mysql> UPDATE user SET plugin='auth_socket' WHERE User='YOUR_SYSTEM_USER';
+mysql> FLUSH PRIVILEGES;
+mysql> exit;
+```
+
+重启服务：
+
+    $ sudo service mysql restart
 
 ## sql 命令中的 \G
 在使用 mysql 命令行的时候如果查询结果比较大的时候，可以在语句后面加上 `\G;` 来将结果垂直方式展现，可以更好的查看结果。那么 \G 到底是什么意思呢。
@@ -461,3 +584,4 @@ Options:
 - <http://mysql-python.sourceforge.net/MySQLdb.html>
 - <http://mysql-python.sourceforge.net/>
 - <http://mycli.net/>
+- [[MySQL]]

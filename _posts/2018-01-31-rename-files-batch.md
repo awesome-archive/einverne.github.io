@@ -3,7 +3,7 @@ layout: post
 title: "每天学习一个命令: rename 批量修改文件名"
 tagline: ""
 description: ""
-category: 学习笔记
+category: 每天学习一个命令
 tags: [linux, command, rename, file]
 last_updated: 
 ---
@@ -56,6 +56,11 @@ rename 支持通配符
     rename "s/.png/.jpg/" *      # 将 png 改为 jpg
 
 批量修改文件后缀名
+
+或者匹配最后的部分：
+
+    rename "s/oldExt$/newExt/" *.oldExt
+    
 
 ### 批量添加文件后缀
 

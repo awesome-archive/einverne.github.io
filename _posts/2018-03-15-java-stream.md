@@ -1,9 +1,10 @@
 ---
 layout: post
 title: "Java 查漏补缺之 stream"
+aliases: "Java 查漏补缺之 stream"
 tagline: ""
 description: ""
-category: 学习笔记
+category: Java
 tags: [java, java-stream, java-collections, guava, java8]
 last_updated:
 ---
@@ -15,9 +16,9 @@ Stream API 借助于同样新出现的 Lambda 表达式，极大的提高编程�
 ## 创建 stream
 有很多种方法
 
-1. 通过集合的 stream() 方法或者 parallelStream()，比如 Arrays.asList(1,2,3).stream()
-2. 通过 Arrays.stream(Object[]) 方法，比如 Arrays.stream(new int[]{1,2,3})
-3. 使用流的静态方法，比如 Stream.of(Object[]), IntStream.range(int, int) 或者 Stream.iterate(Object, UnaryOperator)，如 Stream.iterate(0, n -> n * 2)，或者 generate(Supplier<T> s) 如 Stream.generate(Math::random)
+1. 通过集合的 `stream()` 方法或者 `parallelStream()`，比如 `Arrays.asList(1,2,3).stream()`
+2. 通过 `Arrays.stream(Object[])` 方法，比如 `Arrays.stream(new int[]{1,2,3})`
+3. 使用流的静态方法，比如 `Stream.of(Object[])`, `IntStream.range(int, int)` 或者 Stream.iterate(Object, UnaryOperator)，如 Stream.iterate(0, n -> n * 2)，或者 `generate(Supplier<T> s)` 如 Stream.generate(Math::random)
 4. BufferedReader.lines() 从文件中获得行的流
 5. Files 类的操作路径的方法，如 list、find、walk 等
 6. 随机数流 Random.ints()
@@ -25,7 +26,7 @@ Stream API 借助于同样新出现的 Lambda 表达式，极大的提高编程�
 8. 更底层的使用 StreamSupport，它提供了将 Spliterator 转换成流的方法
 
 ## intermediate operations
-中间操作会返回一个新的流，并且操作是延迟执行的 (lazy)，它不会修改原始的数据源，而且是由在终点操作开始的时候才真正开始执行。 这个 Scala 集合的转换操作不同，Scala 集合转换操作会生成一个新的中间集合，显而易见 Java 的这种设计会减少中间对象的生成。
+**中间操作**会返回一个新的流，并且操作是延迟执行的 (lazy)，它不会修改原始的数据源，而且是由在终点操作开始的时候才真正开始执行。 这个 Scala 集合的转换操作不同，Scala 集合转换操作会生成一个新的中间集合，显而易见 Java 的这种设计会减少中间对象的生成。
 
 ### distinct
 distinct 保证输出的流中包含唯一的元素，它是通过 Object.equals(Object) 来检查是否包含相同的元素。
@@ -67,11 +68,11 @@ map 方法将流中的元素映射成另外的值，新的值类型可以和原�
         .ifPresent(System.out::println);  // 3
 
 ### flatmap
-flatmap 方法混合了 map + flattern 的功能，它将映射后的流的元素全部放入到一个新的流中。它的方法定义如下：
+`flatmap` 方法混合了 `map` + `flattern` 的功能，它将映射后的流的元素全部放入到一个新的流中。它的方法定义如下：
 
     <R> Stream<R> flatMap(Function<? super T,? extends Stream<? extends R>> mapper)
 
-可以看到 mapper 函数会将每一个元素转换成一个流对象，而 flatMap 方法返回的流包含的元素为 mapper 生成的所有流中的元素。
+可以看到 mapper 函数会将每一个元素转换成一个流对象，而 `flatMap` 方法返回的流包含的元素为 mapper 生成的所有流中的元素。
 
     List<List<String>> lists = Arrays.asList(Arrays.asList("a", "b"), Arrays.asList("c", "d"));
     List<String> collect = lists.stream()
@@ -97,7 +98,7 @@ peek 方法方法会使用一个 Consumer 消费流中的元素，但是返回�
 
 ### sorted
 
-sorted() 将流中的元素按照自然排序方式进行排序，如果元素没有实现 Comparable，则终点操作执行时会抛出 java.lang.ClassCastException 异常。 `sorted(Comparator<? super T> comparator)`可以指定排序的方式。
+`sorted()` 将流中的元素按照自然排序方式进行排序，如果元素没有实现 Comparable，则终点操作执行时会抛出 `java.lang.ClassCastException` 异常。 `sorted(Comparator<? super T> comparator)`可以指定排序的方式。
 
 对于有序流，排序是稳定的。对于非有序流，不保证排序稳定。
 
@@ -121,22 +122,26 @@ skip 返回丢弃了前 n 个元素的流，如果流中的元素小于或者等
 ### match
 这一组方法用来检查流中的元素是否满足断言。
 
-- allMatch 只有在所有的元素都满足断言时才返回 true, 否则 flase, 流为空时总是返回 true
-- anyMatch 只有在任意一个元素满足断言时就返回 true, 否则 flase,
-- noneMatch 只有在所有的元素都不满足断言时才返回 true, 否则 flase,
+- allMatch 只有在所有的元素都满足断言时才返回 true, 否则 false, 流为空时总是返回 true
+- anyMatch 只有在任意一个元素满足断言时就返回 true, 否则 false,
+- noneMatch 只有在所有的元素都不满足断言时才返回 true, 否则 false,
 
-    public boolean allMatch(Predicate<? super T> predicate)
-    public boolean anyMatch(Predicate<? super T> predicate)
-    public boolean noneMatch(Predicate<? super T> predicate)
+```
+public boolean allMatch(Predicate<? super T> predicate)
+public boolean anyMatch(Predicate<? super T> predicate)
+public boolean noneMatch(Predicate<? super T> predicate)
+```
 
 举例
 
-    System.out.println(Stream.of(1, 2, 3, 4, 5).allMatch(i -> i > 0)); //true
-    System.out.println(Stream.of(1, 2, 3, 4, 5).anyMatch(i -> i > 0)); //true
-    System.out.println(Stream.of(1, 2, 3, 4, 5).noneMatch(i -> i > 0)); //false
-    System.out.println(Stream.<Integer>empty().allMatch(i -> i > 0)); //true
-    System.out.println(Stream.<Integer>empty().anyMatch(i -> i > 0)); //false
-    System.out.println(Stream.<Integer>empty().noneMatch(i -> i > 0)); //true
+```
+System.out.println(Stream.of(1, 2, 3, 4, 5).allMatch(i -> i > 0)); //true
+System.out.println(Stream.of(1, 2, 3, 4, 5).anyMatch(i -> i > 0)); //true
+System.out.println(Stream.of(1, 2, 3, 4, 5).noneMatch(i -> i > 0)); //false
+System.out.println(Stream.<Integer>empty().allMatch(i -> i > 0)); //true
+System.out.println(Stream.<Integer>empty().anyMatch(i -> i > 0)); //false
+System.out.println(Stream.<Integer>empty().noneMatch(i -> i > 0)); //true
+```
 
 ### count
 count 返回流中的元素数量，返回类型 `long`

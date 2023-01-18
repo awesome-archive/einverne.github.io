@@ -4,7 +4,7 @@ title: "Bash 学习笔记之基本使用"
 tagline: "Bash 学习笔记"
 description: "Bash 学习笔记"
 category: [ Linux ]
-tags: [ linux , bash, vim,]
+tags: [ linux , bash, vim, shell, zsh, unix, command, cli ]
 last_updated: 2017-01-08
 ---
 
@@ -47,18 +47,20 @@ Bash Keyboard Shortcuts 在绝大多数情况下一下快捷键可以直接使�
 
 Command |  Explain
 --------|------------
-Ctrl + a  |  移动到命令最前 Go to the beginning of the line (Home)
-Ctrl + e  |  移动到行尾 Go to the End of the line (End)
-Ctrl + p  |  上一个命令 Previous command (Up arrow)
-Ctrl + n  |  下一个命令 Next command (Down arrow)
- Alt + b  |  不删除命令的情况下，向前移动一个单词 Back (left) one word
- Alt + f  |  向后一个单词 Forward (right) one word
-Ctrl + b  |  光标向前移动一个字符 Backward
-Ctrl + f  |  光标向后移动一个字符 Forward
-Ctrl + xx |  在行首和当前光标的位置来回切换 Toggle between the start of line and current cursor position
+**Ctrl + a**  |  移动到命令最前 Go to the beginning of the line (Home)
+**Ctrl + e**  |  移动到行尾 Go to the End of the line (End)
+**Ctrl + p**  |  上一个命令 Previous command (Up arrow)
+**Ctrl + n**  |  下一个命令 Next command (Down arrow)
+ **Alt + b**  |  不删除命令的情况下，向前移动一个单词 Back (left) one word
+ **Alt + f**  |  向后一个单词 Forward (right) one word
+**Ctrl + b**  |  光标向前移动一个字符 Backward
+**Ctrl + f**  |  光标向后移动一个字符 Forward
+**Ctrl + xx** |  在行首和当前光标的位置来回切换 Toggle between the start of line and current cursor position
+
+`Ctrl-b` 和 `Ctrl-f` 这两个快捷键是我经常容易忘记的两个，但是有的时候又要比左右方向键要方便很多，所以还是要记一下的。
 
 ### 编辑 Editing
-编辑相关的快捷键，对我而言 Ctrl + w 是一个非常常用的快捷键，当输入发生错误时，直接快速删除前一个单词再进行修正。
+编辑相关的快捷键，对我而言 <kbd>Ctrl</kbd> + <kbd>w</kbd> 是一个非常常用的快捷键，当输入发生错误时，直接快速删除前一个单词再进行修正。
 
 Command   |  Explain
 ----------|------------
@@ -69,21 +71,21 @@ Ctrl + d   |  Delete character under the cursor
 Ctrl + h   |  Delete character before the cursor (Backspace)
  - | -
 Ctrl + w   |  Cut the Word before the cursor to the clipboard. 一般用来快速删除前一个单词，也可以用 Alt + Backspace
-Ctrl + k   |  Cut the Line after the cursor to the clipboard.
+Ctrl + k   |  Cut the Line after the cursor to the clipboard. 将光标后面的内容剪切
 Ctrl + u   |  Cut/delete the Line before the cursor to the clipboard. 一般用来快速清除当前输入命令
 -----------|----------------------
 Alt + t    |  Swap current word with previous
 Ctrl + t   |  Swap the last two characters before the cursor (typo).
 Esc  + t   |  Swap the last two words before the cursor.
 -----------|----------------------
- Ctrl + y   |  Paste the last thing to be cut (yank)
-  Alt + u   |  UPPER capitalize every character from the cursor to the end of the current word.
-  Alt + l   |  Lower the case of every character from the cursor to the end of the current word.
-  Alt + c   |  Capitalize the character under the cursor and move to the end of the word.
-  Alt + r   |  Cancel the changes and put back the line as it was in the history (revert).
- Ctrl + _   |  Undo
+Ctrl + y   |  Paste the last thing to be cut (yank)
+Alt + u   |  UPPER capitalize every character from the cursor to the end of the current word.
+Alt + l   |  Lower the case of every character from the cursor to the end of the current word.
+Alt + c   |  Capitalize the character under the cursor and move to the end of the word.
+Alt + r   |  Cancel the changes and put back the line as it was in the history (revert).
+Ctrl + _   |  Undo
 ------------|-------------------------------
- TAB        |  Tab completion for file/directory names
+TAB        |  Tab completion for file/directory names
 
 For example, to move to a directory 'sample1'; Type cd sam ; then press TAB and ENTER.
 type just enough characters to uniquely identify the directory you wish to open.
@@ -93,7 +95,7 @@ type just enough characters to uniquely identify the directory you wish to open.
 
 Command |  Explain
 --------|------------|
-Ctrl + r  |  Recall the last command including the specified character(s)      <br/>  searches the command history as you type. <br/>  Equivalent to : vim ~/.bash_history.
+**Ctrl + r**  |  Recall the last command including the specified character(s)      <br/>  searches the command history as you type. <br/>  Equivalent to : vim ~/.bash_history.
 Ctrl + p  |  Previous command in history (i.e. walk back through the command history)
 Ctrl + n  |  Next command in history (i.e. walk forward through the command history)
 ----------|-------------------------
@@ -123,25 +125,25 @@ Ctrl + Z |  Send the signal `SIGTSTP` to the current task, which suspends it. <b
 
 最常使用的应该还是 `Ctrl-a`, `Ctrl-e`, `Ctrl-f`, `Ctrl-b`, `Ctrl-l`, `Ctrl-h`, `Ctrl-w`, `Ctrl-k`, `Ctrl-u`, `Ctrl-y`, `Ctrl-r`.
 
-命令    |     说明    |
---------|-----------|
-Ctrl-B  | 后移一个字符|
-Ctrl-F  | 向前移动一个字符|
-DEL     | 向后删除一个字符|
-Ctrl-D  | 向前删除一个字符|
-Ctrl-A  | 移到行首|
-Ctrl-E  | 移到行尾 |
-Ctrl-K  | 向前删除到行尾 |
-Ctrl-P  | 移到前一行|
-Ctrl-N  | 移到后一行 |
-Ctrl-R  | 向后搜索 |
-Ctrl-J  | 等同于 RETURN|
-Ctrl-L  | 清除屏幕，将当前行放到屏幕最上面 |
-Ctrl-M  | 等同于 RETURN |
-Ctrl-O  | 等同于 RETURN 随后在显示历史命令中下一行 |
-Ctrl-T  | 颠倒光标左右两个字符，将光标向前移一个|
-Ctrl-U  | 从光标位置开始删除行 ，向后删除到行首|
-Ctrl-V  | 引用插入|
+| 命令   | 说明                                     |
+| ------ | ---------------------------------------- |
+| Ctrl-B | 后移一个字符                             |
+| Ctrl-F | 向前移动一个字符                         |
+| DEL    | 向后删除一个字符                         |
+| Ctrl-D | 向前删除一个字符                         |
+| Ctrl-A | 移到行首                                 |
+| Ctrl-E | 移到行尾                                 |
+| Ctrl-K | 向前删除到行尾                           |
+| Ctrl-P | 移到前一行                               |
+| Ctrl-N | 移到后一行                               |
+| Ctrl-R | 向后搜索                                 |
+| Ctrl-J | 等同于 RETURN                            |
+| Ctrl-L | 清除屏幕，将当前行放到屏幕最上面         |
+| Ctrl-M | 等同于 RETURN                            |
+| Ctrl-O | 等同于 RETURN 随后在显示历史命令中下一行 |
+| Ctrl-T | 颠倒光标左右两个字符，将光标向前移一个   |
+| Ctrl-U | 从光标位置开始删除行 ，向后删除到行首    |
+| Ctrl-V | 引用插入                                 |
 
 
 ## Vi 编辑模式
@@ -228,14 +230,14 @@ shopt 选项
     vi                  on
     xtrace              off
 
-选项     |       解释      |
----------|-------------|
-emacs       | emacs 编辑模式 |
-vi          | vi 编辑模式  |
-ignoreeof   | 不允许单独使用 Ctrl-D 退出  |
-noclobber   | 不允许输出重定向（>）覆盖已存在的文件 |
-noglob      | 不允许扩展文件名通配符如*和？
-nounset     | 试图使用未定义变量时给出错误
+| 选项      | 解释                                  |
+| --------- | ------------------------------------- |
+| emacs     | emacs 编辑模式                        |
+| vi        | vi 编辑模式                           |
+| ignoreeof | 不允许单独使用 Ctrl-D 退出            |
+| noclobber | 不允许输出重定向（>）覆盖已存在的文件 |
+| noglob    | 不允许扩展文件名通配符如`*`和 `?`     |
+| nounset   | 试图使用未定义变量时给出错误          |
 
 
 ### 变量 {#variable}
@@ -246,7 +248,7 @@ Shell 变量也是一个拥有取值的名字，bash 有一些内置的变量，
 
 **等号两边必须没有空格**。
 
-引用变量，使用符号 $ , 单引号内部的变量会直接使用而不需要转义，而**双引号内部变量需要转义**。
+引用变量，使用符号 `$` , 单引号内部的变量会直接使用而不需要转义，而**双引号内部变量需要转义**。
 
 	echo $varname
 
@@ -259,12 +261,12 @@ PATH 变量，帮助 shell 找到输入的命令。输入 `echo $PATH` 得到类
 	/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
-变量      |     含义
-------------|--------------|
-HOME        |  主目录
-SECONDS     |  调用 shell 的秒数
-BASH        |   正在运行的 shell 实例路径名
-BASH_VERSION    | shell 版本号
-BASH_VERSINFO   | shell 版本信息数组
-PWD             |  当前目录
-OLDPWD          |  最后一个 cd 命令前的目录
+| 变量          | 含义                        |
+| ------------- | --------------------------- |
+| HOME          | 主目录                      |
+| SECONDS       | 调用 shell 的秒数           |
+| BASH          | 正在运行的 shell 实例路径名 |
+| BASH_VERSION  | shell 版本号                |
+| BASH_VERSINFO | shell 版本信息数组          |
+| PWD           | 当前目录                    |
+| OLDPWD        | 最后一个 cd 命令前的目录    |

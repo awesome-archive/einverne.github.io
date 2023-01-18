@@ -1,6 +1,7 @@
 ---
 layout: post
-title: "jmap 命令使用"
+title: "jmap 命令使用及内存分析"
+aliases: "jmap 命令使用及内存分析"
 tagline: ""
 description: ""
 category: 学习笔记
@@ -18,7 +19,7 @@ jdk 自带的命令用来 dump heap info，或者查看 ClassLoader info，等�
 
 ### 不加任何参数
 
-命令
+直接使用命令
 
     jmap pid
 
@@ -77,6 +78,13 @@ hprof 二进制格式转储 Java 堆到指定 filename 的文件中，live 选�
     sudo update-alternatives --config java
 
 来配置保证使用相同的 Java 程序。
+
+## heap 文件大小差异
+使用 jmap dump 出来的二进制文件大小可能会有很大的差别。
+
+在 MAT 中不会显示 unreachable objects。
+
+可以在 Preferences -> Memory Analyzer -> Keep Unreachable Objects 来启用。
 
 ## reference
 

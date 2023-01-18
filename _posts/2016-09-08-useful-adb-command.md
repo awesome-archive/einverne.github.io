@@ -14,6 +14,11 @@ adb 的全称是 Android Debug Bridge, 这个命令可以用来发送一系列�
 
 adb 使用的默认端口是 5037.
 
+Ubuntu 系下安装
+
+    sudo apt-get install android-tools-adb
+    sudo apt-get install android-tools-fastboot
+
 ## 查看连接设备 adb devices
 来查看设备是否已经连接
 
@@ -53,11 +58,29 @@ adb 使用的默认端口是 5037.
 
     adb pull /sdcard/Download/filename.txt ~/filename.txt
 
+### 从设备上拉取多个文件
+`adb pull` 命令不知道为什么用 `*.apk` 这样的正则无法使用，所以只能先过滤出来特定的文件后缀，然后再使用 `adb pull`
+
+比如说要把 `/sdcard/Download` 文件夹中的 `*.apk` 文件都拉取到本地，那么可以：
+
+    adb shell ls /sdcard/Download/\*.apk | tr '\r' ' ' | xargs -n1 adb pull
+
+如果想要了解更多 `xargs` 命令的使用，可以参考[这一篇文章](/post/2019/06/xargs.html)。
+
+## 检查设备是否已经 root
+
+    adb shell
+
+然后进入之后输入 `su` 查看手机是否会弹出 root 授权窗口。
+
 ## adb reboot
 
 重启设备，在刷机时经常使用
 
-## adb reboot-bootloader
+## 进入 bootloader
+使用
+
+    adb reboot bootloader
 
 重启进去 bootloader
 
@@ -104,7 +127,7 @@ shell 中可以直接截取设备的屏幕
 
 在 shell 命令中可以使用 `screenrecord` 命令来录制屏幕。需要 Android 4.4 （API Level 19）及以上，该命令将屏幕保存成 MPEG-4 文件。不录制声音。
 
-`adb shell screenrecord /sdcard/Download/filename.mp4`
+    adb shell screenrecord /sdcard/Download/filename.mp4
 
 使用 <kbd>Ctrl</kbd> + <kbd>c</kbd> 来停止录像，否则默认录制 3min 或者使用 `--time-limit` 参数来指定。
 
@@ -213,9 +236,11 @@ shell 中可以直接截取设备的屏幕
 
     adb install app.apk
 
-可以使用 `-r` 命令覆盖安装应用
+可以使用 `-r` 命令覆盖安装应用 `adb install -r apkfilename.apk`
 
-`adb install -r apkfilename.apk`
+如果 adb 连接了多台设备可以使用 `-s` 来选择一台设备
+
+    adb -s DEVICE install -r app.apk
 
 `adb install` 的其他参数
 

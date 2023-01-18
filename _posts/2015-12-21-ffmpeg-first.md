@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "ffmpeg 入门笔记"
+title: "FFmpeg 入门笔记"
 tagline: ""
-description: "使用 ffmpeg 进行转码"
+description: "使用 FFmpeg 进行转码"
 category: 学习笔记
 tags: [ffmpeg, linux, media, movie, mp4, mp3, format, ffplay, ffprobe]
 last_updated: 2015-12-31
@@ -16,7 +16,8 @@ last_updated: 2015-12-31
 在进入 ffmpeg 入门之前有一些基本概念需要了解，我在查看 ffmpeg 的时候回头查阅了这些资料，觉得先行了解比较好，这些概念都是视频或者音频中的基本概念。
 
 ### 比特率 {#bit-rate}
-比特率，英文为 bit rate，描述每秒钟输出多少 KB 的参数，单位是 Kbps，也就是 kbit/s，8Kbit/s = 1KB/s。也就是说 800Kbps 意思就是每秒视频就要占用 100KB 磁盘空间。对于音频文件也存在比特率，同理。压缩同一个视频，视频比特率越大，文件体积越大。视频比特率越大，画质越好，马赛克越少。
+
+[[比特率]]，英文为 bit rate，描述每秒钟输出多少 KB 的参数，单位是 Kbps，也就是 kbit/s，8Kbit/s = 1KB/s。也就是说 800Kbps 意思就是每秒视频就要占用 100KB 磁盘空间。对于音频文件也存在比特率，同理。压缩同一个视频，视频比特率越大，文件体积越大。视频比特率越大，画质越好，马赛克越少。
 
 MP3 一般使用的比特率为 8~320kbps。
 
@@ -56,14 +57,13 @@ H.264 标准建议
 当画面的 FPS 达到 60 帧 / 秒时，已经能满足绝大部分应用需求。一般情况下，如果能够保证游戏画面的平均 FPS 能够达到 30 帧 / 秒，那么画面已经基本流畅；能够达到 50 帧 / 秒，就基本可以体会到行云流水的感觉了。一般人很难分辨出 60 帧 / 秒与 100 帧 / 秒有什么不同。
 
 ### 分辨率 {#resolution}
-
-最好理解的概念了，表示画面的大小，单位是像素 px。
+[[分辨率]] 是最好理解的概念了，因为日常就能看到很多地方使用，表示画面的大小，单位是像素 px。
 
 和编码率的关系：越高的分辨率，需要越高的编码率，因为图像的细节多了，需要的文件体积也应该增大，否则还不如画面小一些，你会发现同一码率，画面越大，图像的马赛克程度越明显。
 
 ### 采样率 {#sampling-rate}
 
-每秒钟对音频信号的采样次数，采样频率越高声音还原度越高，声音更加自然。单位是赫兹 Hz。音频文件一般使用的采样率是 44100 Hz ，也就是一秒钟采样 44100 次，之所以使用这个数值是因为经过了反复实验，人们发现这个采样精度最合适，低于这个值就会有较明显的损失，而高于这个值人的耳朵已经很难分辨，而且增大了数字音频所占用的空间。我们所使用的 CD 的采样标准就是 44.1k，目前 44.1k 还是一个最通行的标准。
+[[采样率]] 是指每秒钟对音频信号的采样次数，采样频率越高声音还原度越高，声音更加自然。单位是赫兹 Hz。音频文件一般使用的采样率是 44100 Hz ，也就是一秒钟采样 44100 次，之所以使用这个数值是因为经过了反复实验，人们发现这个采样精度最合适，低于这个值就会有较明显的损失，而高于这个值人的耳朵已经很难分辨，而且增大了数字音频所占用的空间。我们所使用的 CD 的采样标准就是 44.1k，目前 44.1k 还是一个最通行的标准。
 
 ## 安装 {#installation}
 Debian/Ubuntu/Linux Mint 下安装 ffmpeg 很简单：
@@ -95,13 +95,35 @@ Debian/Ubuntu/Linux Mint 下安装 ffmpeg 很简单：
 从视频文件中提取音频并保存为 mp3
 
     ffmpeg -i input.mp4 -f mp3 output.mp3
+    # or
+    ffmpeg -i input.mp4 -vn output.mp3
+    # or
+    ffmpeg -i input.mp4 -vn -ar 44100 -ac 2 -ab 320 -f mp3 output.mp3
+
+说明：
 
 如果需要可以在中间加上 `-ar 44100 -ac 2 -ab 192` 系数，表示采样率 44100 ，通道 2 立体声，码率 192 kb/s.
+
+- `-vn` 表示不使用视频
+- `-ar` 设置音频采样率
+- `-ac` 设置音频 Channels
+- `-ab` 设置音频比特率 bitrate
+- `-f` 指定输出文件的格式
+
 
 ### 将声音合成到视频
 将声音合成到视频中
 
     ffmpeg -i input_music.mp3 -i input_video.mp4 output.mp4
+
+将音频流和视频流合并：
+
+```
+ffmpeg -i input.mp4 -i input.mp3 -c copy -map 0:v:0 -map 1:a:0 output.mp4
+```
+
+- `-map` 参数指定了从输入文件的视频流和音频流中输出文件
+- 如果你的音频流时长超过视频流，或者相反，你可以使用-shortest参数，使ffmpeg参数在处理到两个输入短的结束时结束。
 
 ### 转化格式
 格式之间转换 大部分的情况下直接运行一下即可
@@ -128,6 +150,12 @@ Debian/Ubuntu/Linux Mint 下安装 ffmpeg 很简单：
 比如需要从视频第 1 分 45 秒地方，剪 10 秒画面，-ss 表示开始位置，-t 表示延长时间
 
     ffmpeg -i input.mp4 -ss 00:01:45 -t 10 output.mp4
+
+如果要精确控制切片的时间，比如想要剪切从 0 秒到 10 分的视频[^cut]
+
+    ffmpeg -ss 00:00:00 -to 00:10:00 -i input.mp4 -c copy output.mp4
+
+[^cut]: <https://stackoverflow.com/a/42827058/1820217>
 
 ### 加速减速视频
 加速视频
@@ -171,7 +199,7 @@ ffmpeg 码率相关的参数主要有 `-minrate`, `maxrate`, `-b:v`
 
     ffmpeg -i input.mp4 -b:v 2000k output.mp4
 
-也就是把原始视频转换成 2 Mbps 码率视频。ffmpeg 官方建议，在设置 `-b:v` 时，同时加上 `-bufsize` 用于设置码率控制缓冲器大小，让整体码率更加趋近于希望的只，减少波动。
+也就是把原始视频转换成 2 Mbps 码率视频。ffmpeg 官方建议，在设置 `-b:v` 时，同时加上 `-bufsize` 用于设置码率控制缓冲器大小，让整体码率更加趋近于希望的值，减少波动。
 
     ffmpeg -i input.mp4 -b:v 2000k -bufsize 2000k output.mp4
 
@@ -179,6 +207,56 @@ ffmpeg 码率相关的参数主要有 `-minrate`, `maxrate`, `-b:v`
 
     ffmpeg -i input.mp4 -b:v 2000k -bufsize 2000k -maxrate 2500k output.mp4
 
+### 强制输出文件的帧率
+比如要强制输出文件的帧率为 24 fps:
+
+```
+ffmpeg -i input.avi -r 24 output.avi
+```
+
+
+### 压缩视频大小
+对于一个非常大的文件，经常需要压缩文件大小可以使用
+
+     ffmpeg -i input.mp4 -vcodec h264 -acodec mp3 output.mp4
+
+
+### 更改视频的分辨率
+如果想要改变视频的分辨率
+
+    ffmpeg -i input.mp4 -filter:v scale=1280:720 -c:a copy output.mp4
+    # or
+    ffmpeg -i input.mp4 -s 1280x720 -c:a copy output.mp4
+
+### 裁剪视频
+
+    ffmpeg -i input.mp4 -filter:v "crop=w:h:x:y" output.mp4
+
+说明：
+
+- `-filter:v` 过滤视频
+
+### 设置视频的宽高比
+
+    ffmpeg -i input.mp4 -aspect 16:9 output.mp4
+
+常见的宽高比：
+
+- 16:9
+- 4:3
+- 16:10
+- 5:4
+
+### 给音频文件增加图片
+将一个音频文件编程一个视频
+
+    ffmpeg -loop 1 -i input_image.jpg -i input_audio.mp3 -c:v libx264 -c:a aac -strict experimental -b:a 192k -shortest output.mp4
+
+### 给视频文件增加字幕
+
+```
+ffmpeg -i ./file.mp4 -c:v libx264 -c:a copy -vf "ass=t.ass" out.mp4
+```
 
 ### 查看 ffmpeg 支持格式
 要查看你的 ffmpeg 支持哪些格式，可以用如下命令：
@@ -566,3 +644,5 @@ ffmpeg 使用语法：
 - <http://superuser.com/questions/436056/how-can-i-get-ffmpeg-to-convert-a-mov-to-a-gif>
 - <http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html>
 - <https://gist.github.com/protrolium/e0dbd4bb0f1a396fcb55>
+- <https://www.ostechnix.com/20-ffmpeg-commands-beginners/>
+- <https://www.videoproc.com/resource/ffmpeg-commands.htm>

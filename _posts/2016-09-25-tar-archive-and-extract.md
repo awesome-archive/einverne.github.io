@@ -3,7 +3,7 @@ layout: post
 title: "每天学习一个命令：tar 压缩和解压文件"
 tagline: ""
 description: ""
-category: Linux
+category: 每天学习一个命令
 tags: [tar, linux, archive, extract, command]
 last_updated:
 ---
@@ -33,7 +33,7 @@ tar 命令常用参数
     tar -cvf filename.tar /folder    # 仅打包不压缩
     tar -xvf filename.tar            # 解压包
 
-压缩解压 gzip
+压缩与解压 gzip：
 
     tar -zcvf filename.tar.gz /folder # gzip 压缩
     tar -zxvf filename.tar.gz         # 当前目录下解压文件
@@ -63,6 +63,19 @@ tar 命令常用参数
 - `-f ARCHIVE` 后面接文件，`-f` 后面需要直接接压缩包名
 
 经过上面的解释，可以习惯上可以记忆成 压缩格式 (z/j/J) + 压缩 / 解压 / 查看 (c/x/t) + v + f 文件名
+
+### 压缩时排除绝对路径
+有的时候在打包文件的时候会跟随着很长的路径，如果不想要这个很长的路径可以使用 `-C` 参数来将目录 `change to directory`
+
+比如想要备份 Docker volume 目录 `/var/lib/docker/volumes/chevereto_chevereto_content/`，如果：
+
+	tar -zcvf backup_content.tar.gz /var/lib/docker/volumes/chevereto_chevereto_content/
+
+这样打包，最后的压缩包内容会将整个相对目录也打包进去，可以使用
+
+	tar -zcvf backup_content.tar.gz -C /var/lib/docker/volumes/chevereto_chevereto_content/ .
+
+然后打包的结果 tar 中就只有 `chevereto_chevereto_content` 目录下的内容。
 
 ### 列出压缩包内的文件
 
@@ -97,6 +110,26 @@ tar 命令常用参数
     tar -zxvf filename.tar.gz -C /path/to/
 
 使用 `-C` 参数将压缩包内容解压到目录 `/path/to/filename`
+
+### 不解压直接查看压缩包内容
+
+    tar -tf archive.tar.gz
+
+### 跨机器压缩传输
+上面提到的命令都需要将压缩文件存储到本地，那么如果有一种情况，本地空间有限，无法容纳压缩包的内容，想要实时通过压缩，然后传输到另一台机器，可以使用：[^1]
+
+```
+tar czvf - /source | ssh username@remote.host "cd /destination; tar xzvf -"
+```
+
+[^1]: <https://serverfault.com/a/678430/288331>
+
+### 跨机器打包
+比如要在 A 机器将目录 `/www/backup` 备份到 B 机器的 `/home/einverne/Backup` 目录，并压缩：
+
+```
+tar zcvf - /www/backup/ | ssh your_username@ip_of_hostname "cat > /home/einverne/Backup/aapanel.tgz"
+```
 
 ## Gzip Bzip2 vs XZ
 

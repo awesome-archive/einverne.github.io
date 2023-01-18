@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Google Guava 中本地缓存 LoadingCache 使用"
+aliases: "Google Guava 中本地缓存 LoadingCache 使用"
 tagline: ""
 description: ""
 category: 学习笔记
@@ -13,8 +14,26 @@ last_updated:
 通常情况下，Guava caching 适用于以下场景：
 
 - 花费一些内存来换取速度
-- 期望一些 key 会被不止一次被调用
-- 缓存内容不会缓存超过内存空间的值，Guava caches 不会存储内容到文件，或者到服务器外部，如果有此类需求考虑使用 Memcached 类似工具
+- 一些 key 会被不止一次被调用
+- 缓存内容有限，不会超过内存空间的值，Guava caches 不会存储内容到文件或者到服务器外部，如果有此类需求考虑使用 Memcached, Redis 等类似工具
+
+先来看一下 Guava 中 Cache 接口的定义：
+
+	com.google.common.cache.Cache
+	com.google.common.cache.Cache#asMap
+	com.google.common.cache.Cache#cleanUp
+	com.google.common.cache.Cache#get
+	com.google.common.cache.Cache#getAllPresent
+	com.google.common.cache.Cache#getIfPresent
+	com.google.common.cache.Cache#invalidate
+	com.google.common.cache.Cache#invalidateAll()
+	com.google.common.cache.Cache#invalidateAll(java.lang.Iterable<?>)
+	com.google.common.cache.Cache#put
+	com.google.common.cache.Cache#putAll
+	com.google.common.cache.Cache#size
+	com.google.common.cache.Cache#stats
+
+Cache 接口定义的方法大都一目了然，值得一说的就是 `stats()` 方法，这个方法会返回一个 `CacheStats` 对象，这个对象包括了该 Cache 的一些统计信息，包括 `hitCount`， `missCount`，`loadSuccessCount`，`loadExceptionCount`，`totalLoadTime` 和 `evictionCount`。
 
 `Cache` 通过 `CacheBuilder` 类的 Builder 模式获取：
 
@@ -36,6 +55,11 @@ last_updated:
 
 当第一次调用 `get()` 方法时，如果 value 不存在则会触发 `load()` 方法，load 方法不能返回 null，否则会报错。
 
+### LoadingCache 不能 Cache null
+LoadingCache 是不支持缓存 null 值的，如果 load 回调方法返回 null，则在 get 的时候会抛出异常。
+
+如果在 CacheLoader 中抛出异常，那么 Cache 会认为没有完成，所以新的值不会被 Cache。基于这一条规则，那么如何避免在 CacheLoader 中因为缓存 null 而抛出异常，那就是编程者自己处理 null 异常。
+
 ## get() vs getUnchecked()
 最正统的查询 `LoadingCache` 的方法是调用 `get(k)` 方法，这个方法如果查询到已经缓存的值会立即返回，否则使用缓存的 `CacheLoader` 自动加载一个新值到缓存并返回。因为 `CacheLoader` 可能会抛出异常，那么如果有异常，则`LoadingCache.get(k)` 会抛出 `ExecutionException` 异常。而如果 CacheLoader 抛出 unchecked 未检查的异常，则 `get(k)` 方法会抛出 `UncheckedExecutionException` 异常。
 
@@ -44,8 +68,11 @@ last_updated:
 ## 定时回收
 CacheBuilder 在构建 Cache 时提供了两种定时回收的方法
 
-- expireAfterAccess(long, TimeUnit) 缓存项在给定时间内没有被读或写访问，则回收
+- expireAfterAccess(long, TimeUnit) : 缓存项在给定时间内没有被读或写访问，则回收
 - expireAfterWrite(long, TimeUnit)：缓存项在给定时间内没有被写访问（创建或覆盖），则回收
+
+## 失效
+调用 LoadingCache 的 `invalidate` 方法可以使得 key 失效
 
 ## reference
 

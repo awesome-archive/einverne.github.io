@@ -5,12 +5,12 @@ tagline: ""
 description: ""
 category: 学习笔记
 tags: [ssh, password, linux, ssh-copy-id,]
-last_updated: 
+last_updated:
 ---
 
 ## 背景
 
-`ssh-copy-id` 命令可以把本地主机的公钥复制到远程主机的 authorized_keys 文件上。`authorized_keys` 文件用来验证 client 。使用 `ssh-copy-id` 命令将本地公钥复制到远程主机之后可以实现免密登录远程主机。
+`ssh-copy-id` 命令可以把本地主机的公钥复制到远程主机的 `authorized_keys` 文件上。`authorized_keys` 文件用来验证 client 。使用 `ssh-copy-id` 命令将本地公钥复制到远程主机之后可以实现免密登录远程主机。
 
 ## 简介
 
@@ -30,12 +30,12 @@ last_updated:
 
 ## 基本使用
 
-把本地的ssh公钥文件安装到远程主机对应的账户下：
+把本地的 ssh 公钥文件安装到远程主机对应的账户下：
 
     ssh-copy-id user@server
     ssh-copy-id -i ~/.ssh/id_rsa.pub user@server
 
-    chmod 700 ~/.ssh 
+    chmod 700 ~/.ssh
     chmod 600 ~/.ssh/authorized_keys
 
 ## 高级使用

@@ -8,17 +8,22 @@ tags: [dict, linux, goldendict, youdao, dictionary, free-dictionary, offline-dic
 last_updated:
 ---
 
-最近在使用 Linux 版有道的时候发现非常卡，影响正常使用，所以就发现了这个 GoldenDict。以前在 Win 下用过 [lingoes](http://www.lingoes.cn/) 但是无奈只有 Win 版本。
-GoldenDict 是一个开源词典，使用 WebKit 作为渲染核心，它像 Eudict、Mdict、Lingoes 以及 BlueDict 等词典一样可以加载外挂词典文件。基于 GNU GPL 第三版以上协议。
+最近在使用 Linux 版有道的时候发现非常卡，影响正常使用，所以就发现了这个 GoldenDict。以前在 Win 下用过 [lingoes](http://www.lingoes.cn/) 但是无奈只有 Win 版本。有的时候也真的挺有意思，闭源的软件用着不舒服，切换到开源软件之后就像打开了新天地，从搜狗切换到 Rime 也是，开源软件不仅在功能上优于这些闭源软件，自己稍微调整一下之后就会发现体验也远超有道，搜狗之类。
+
+GoldenDict 是一个开源词典，用 QT 编写，使用 WebKit 作为渲染核心，它像 Eudict、Mdict、Lingoes 以及 BlueDict 等词典一样可以加载外挂词典文件。基于 GNU GPL 第三版以上协议。
+
+使用 GoldenDict 配上习惯的词典和脚本之后就再也离不开这个工具了，设置开机启动，设置 <kbd>Ctrl</kbd> + <kbd>c</kbd>两次查当前选中的词，定期的复习和整理查词列表中的词汇，这个工具完美的解决了我查词的需求，并且提供了远超出我想象的功能，中文成语，地名人名，专业术语，韩语，日语完全完全满足了所有查询的需求。
+
+2020 年 8 月更新，让我异常惊喜的时，当我更换到 MacOS 时，GoldenDict 的 Mac 版虽然很久没有更新，但依然可以非常完美的工作，[Syncthing](/post/2019/10/syncthing.html) 同步字典文件和[脚本](https://github.com/einverne/translator) 后立马就工作，不用改变习惯，并且我也没有习惯使用 Mac 上自带的词典（虽然和系统集成得比较好，重按触摸板选中单词即可）。
 
 ## 安装
 Ubuntu/Linux Mint 下安装非常简单
 
     sudo apt install goldendict
 
-- For linux: https://github.com/goldendict/goldendict/wiki/Early-Access-Builds-for-Linux-Portable
-- For Mac OS X : https://github.com/goldendict/goldendict/wiki/Early-Access-Builds-for-Mac-OS-X
-- For Windows: https://github.com/goldendict/goldendict/wiki/Early-Access-Builds-for-Windows
+- For linux: <https://github.com/goldendict/goldendict/wiki/Early-Access-Builds-for-Linux-Portable>
+- For Mac OS X : <https://github.com/goldendict/goldendict/wiki/Early-Access-Builds-for-Mac-OS-X>
+- For Windows: <https://github.com/goldendict/goldendict/wiki/Early-Access-Builds-for-Windows>
 
 ## 功能特色
 
@@ -50,9 +55,27 @@ Ubuntu/Linux Mint 下安装非常简单
 ### GoldenDict 开机启动
 在 Linux gnome 桌面环境下，可能会发现 GoldenDict 设置选项中的开机启动是灰色的按钮无法选中。其实 gnome 自己有一个开机管理的应用叫做 startup application，在这个应用中添加 GoldenDict 即可。
 
+
+## GoldenDict 长句翻译问题
+GoldenDict 在查词方面非常完美，但唯独在长句翻译上落后一些，但是问题不大，利用 Python[脚本](https://github.com/einverne/translator) 添加到 GoldenDict 后整段的翻译问题也解决了。
+
+[[202008262304-GoldenDict查长句]]
+
+## 词典分组
+
+可以在菜单栏中群组，添加群组，然后为群组增加几部字典，然后添加快捷键对字典进行分组，方便快速查阅。
+
+比如可以将同义词词典单独分类，比如可以将常用词词典分类，方便进行查看。
+
 ## 字典安装
 
 ### 在线字典
+菜单栏选择【编辑】>【词典】>【词典来源】>【网站】> 添加 > 启用 可以启用在线的字典。
+
+欧陆
+
+	https://dict.eudic.net/dicts/en/%GDWORD%
+
 有道的源
 
     http://dict.youdao.com/search?q=%GDWORD%&ue=utf8
@@ -68,6 +91,22 @@ iciba
 zdic
 
     http://www.zdic.net/sousuo/?q=%GDWORD%
+
+Collins
+
+	https://www.collinsdictionary.com/dictionary/english/%GDWORD%
+
+
+其他同类型的网站可以照上面的方式自行添加。
+
+- [牛津在线](https://www.oxfordlearnersdictionaries.com/)
+- [朗文在线](https://www.ldoceonline.com/)
+- [剑桥在线](https://dictionary.cambridge.org/zhs/)
+- [韦式在线](https://www.merriam-webster.com/)
+- Vocabulary.com
+- Dictionary.com
+- 沪江小 D 在线词典
+- [汉典](https://www.zdic.net/)
 
 ### 离线字典
 英国学习词典五虎是牛津、朗文、柯林斯、剑桥和麦克米伦，再加上美国的韦氏学习词典，6 大学习词典。
@@ -322,6 +361,9 @@ This electronic dictionary is also made available as a potential starting point 
 　　
 《新华词典》：1980 年 8 月第 1 版，1989 年 9 月第 2 版，2001 年 1 月第 3 版。主编韩作黎，曾任北京市教育局局长，全国教育学会第一、二届常务理事，北京市教育学会会长，中国作协北京分会儿童文学委员会主任，长期从事普通教育工作及儿童文学创作，对小学教育、教学和学校管理有较深研究。该词典是一部以语文为主兼收百科的中型词典，主要供中等文化程度的读者使用。
 
+#### Macmillan Study Dictionary
+暂无
+
 ### 其他字典
 首推 pdawiki，这个论坛上有非常多精美的字典，不过要求门槛比较高，新人一般很难下载到这些离线的字典。
 
@@ -373,14 +415,6 @@ LightLang   | https://code.google.com/archive/p/lightlang/ 已停止开发 | 俄
 Lingoes     | http://www.lingoes.net/ | 私有格式 | Windows only | Windows 下比较好用，但有广告 |
 Dicto       | http://dicto.org.ru/ | XDXF dictionaries | windows only | 只面向俄语 略 |
 
-## 其他在线字典
-Collins online
-
-- https://www.collinsdictionary.com/
-
-Cambridge online
-
-- https://dictionary.cambridge.org/us/
 
 ## 其他编程资源
 使用 stardict-tools 可以将 stardict 格式的字典转变成可读的格式
@@ -400,7 +434,7 @@ Cambridge online
 
 - <https://bitbucket.org/xwang/mdict-analysis>
 
-wikipedia 的离线包，很大，好几十个 G
+Wikipedia 的离线包，很大，好几十个 G
 
 - <http://wiki.kiwix.org/wiki/Main_Page>
 

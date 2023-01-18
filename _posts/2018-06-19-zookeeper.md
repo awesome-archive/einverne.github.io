@@ -8,7 +8,7 @@ tags: [zookeeper, apache, hadoop, ]
 last_updated:
 ---
 
-Apache ZooKeeper 是 Apache 软件基金会的一个软件项目，为大型分布式计算提供开源的分布式协调系统，提供的功能包括配置服务、同步服务和命名注册等。Zookeeper 项目的初衷就是为了降低分布式应用从头开发协同服务的负担。
+Apache [[ZooKeeper]] 是 Apache 软件基金会的一个软件项目，为大型分布式计算提供开源的分布式协调系统，提供的功能包括配置服务、同步服务和命名注册等。Zookeeper 项目的初衷就是为了降低分布式应用从头开发协同服务的负担。
 
 ## ZooKeeper
 
@@ -59,7 +59,7 @@ ZooKeeper 数据节点类型：
 - follower: 负责参与选举的服务器节点
 - observer: 不参加选举
 
-服务端选举算法 paxos 类似
+服务端选举算法 Paxos 类似
 客户端通信方式 JAVA-NIO
 
 ## 服务端运行
@@ -68,7 +68,7 @@ ZooKeeper 服务器端运行于两种模式下：standalone 和 quorum。
 - standalone 一个单独服务器，ZooKeeper 状态无法复制。
 - quorum 一组服务器，同时服务器客户端请求。
 
-选举算法，类似 paxos 算法
+选举算法，类似 [[Paxos 算法]]
 
 
     ZKReentrantLock lock = new ZKLock(zk,timeout,sessionManager);

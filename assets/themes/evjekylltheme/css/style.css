@@ -3,6 +3,7 @@ body {
     padding-top: 60px;
     height: auto;
     min-height: 100%;
+		line-height: 1.8em;
     scroll-behavior: smooth;
 }
 
@@ -15,6 +16,7 @@ ol, ul {
     list-style-type: disc;
     margin-left: 5px;
     padding-left: 20px;
+    font-size: 15px;
 }
 
 h2 {
@@ -46,6 +48,10 @@ h2 {
     margin: 0 0 20px 0;
     font-style: italic;
     font-size: 1em;
+}
+
+a {
+    word-break: break-all;
 }
 
 #toc {
@@ -199,7 +205,7 @@ p img {
 }
 
 .post-content ::selection {
-    background-color: #dee2e6; 
+    background-color: #dee2e6;
  }
 
 
@@ -267,6 +273,7 @@ code {
     margin: 0;
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace, Monaco, Lucida Console, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, sans-serif;
     font-size: 105%;
+    word-break: break-all;
 }
 
 /*

@@ -3,18 +3,18 @@ layout: post
 title: "Java 查漏补缺之注解"
 tagline: ""
 description: ""
-category: 学习笔记
+category: Java
 tags: [java, annotation, interface, ]
 last_updated:
 ---
 
-注解，也称为元数据，注解是一系列元数据，它提供数据用来解释程序代码，但是注解并非是所解释的代码本身的一部分。注解对于代码的运行效果没有直接影响。
+Java 中的注解，也被称为元数据，注解是一系列元数据，它提供数据用来解释程序代码，但是注解并非是所解释的代码本身的一部分。注解对于代码的运行效果没有直接影响。
 
 注解有许多用处，主要如下：
 
-- 提供信息给编译器：编译器可以利用注解来探测错误和警告信息
-- 编译阶段时的处理：软件工具可以用来利用注解信息来生成代码、Html 文档或者做其它相应处理
-- 运行时的处理：某些注解可以在程序运行的时候接受代码的提取
+- 提供信息给**编译器**：编译器可以利用注解来探测错误和警告信息 `@Override`
+- **编译阶段**时的处理：软件工具可以用来利用注解信息来生成代码（lombok）、Html 文档或者做其它相应处理
+- **运行时**的处理：某些注解可以在程序运行的时候接受代码的提取
 
 ## 注解的形式
 常用的注解 `@Override` 等等就略过，如果注解有 annotation type element declarations，可写成：
@@ -76,12 +76,12 @@ last_updated:
 注解的属性也叫做 annotation type element declarations，看起来像方法，但是不是。注解**只有 annotation type element declarations**，没有方法。注解的 annotation type element declarations 在注解的定义中以“无形参的方法”形式来声明，其方法名定义了该 annotation type element declarations 的名字，其返回值定义了该 annotation type element declarations 的类型。
 
 ## 元注解
-有如下元注解 (meta-annotation)，可以理解成定义注解的注解。
+Java 中有如下元注解 (meta-annotation)，可以理解成定义注解的注解。
 
 注解名字 | 解释
------|--------
-@Target  | 定义的注解可以用于什么地方，详见 ElementType 枚举
-@Retention | 在什么级别保存该注解信息，详见 RetentionPolicy 枚举
+---------|--------
+@Target  | 定义的注解可以用于什么地方，比如类型上，方法上，字段上等等，详见 ElementType 枚举
+@Retention | 在什么级别保存该注解信息，比如常见的运行时，详见 RetentionPolicy 枚举
 @Document | 将注解包含在 Javadoc 中
 @Inherited | 允许子类继承父类中的注解
 @Repeatable | 表示该注解可以在同一个定义地方被多次使用

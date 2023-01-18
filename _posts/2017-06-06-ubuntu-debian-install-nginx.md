@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Ubuntu/Debian 安装 nginx"
+aliases: "Ubuntu/Debian 安装 nginx"
 tagline: ""
 description: ""
 category: 经验总结
@@ -145,7 +146,7 @@ http {
 }
 ```
 
-最后需要 ln 启用新的虚拟主机
+最后需要 `ln` 启用新的虚拟主机
 
 	sudo ln -s /etc/nginx/sites-available/www.einverne.info /etc/nginx/sites-enabled/
 
@@ -261,7 +262,7 @@ Configure 后面的参数在编译时会需要用到
 Options                  | Explanation
 -------------------------|-------------------------
 `--prefix=<path>`        | 安装的根目录，默认为 `/usr/local/nginx`
-`--sbin-path=<path>`     | **nginx** 二进制文件路劲，如果没有设定，则使用 prefix 作为相对路劲
+`--sbin-path=<path>`     | **nginx** 二进制文件路径，如果没有设定，则使用 prefix 作为相对路径
 `--conf-path=<path>`     | 配置路径
 `--error-log-path=<path>` | 错误 log
 `--pid-path=<path>`      | nginx 写 pid 文件，通常在 `/var/run` 下

@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Spring mvc 的注解"
+title: "Spring MVC 中常用的注解"
 tagline: ""
 description: ""
 category: 学习笔记
-tags: [Spring, Java, Web, 注解 , 拦截器 , 反射 ]
+tags: [spring, spring-mvc, spring-boot, java, web, 注解 , 拦截器 , 反射 ]
 last_updated:
 ---
 
@@ -25,11 +25,11 @@ last_updated:
 Spring 中的注解大概可以分为两大类：
 
 - Spring 的 bean 容器相关的注解，或者说 bean 工厂相关的注解
-- Springmvc 相关的注解
+- Spring mvc 相关的注解
 
-Spring 的 bean 容器相关的注解，先后有：@Required， @Autowired, @PostConstruct, @PreDestory，还有 Spring3.0 开始支持的 JSR-330 标准 javax.inject.*中的注解 (@Inject, @Named, @Qualifier, @Provider, @Scope, @Singleton).
+Spring 的 bean 容器相关的注解，先后有：`@Required`，` @Autowired`, `@PostConstruct`， `@PreDestory`，还有 Spring3.0 开始支持的 JSR-330 标准 `javax.inject.*` 中的注解 (`@Inject`, `@Named`, `@Qualifier`, `@Provider`, `@Scope`, `@Singleton`).
 
-Spring mvc 相关的注解有：@Controller, @RequestMapping, @RequestParam， @ResponseBody 等等。
+Spring MVC 相关的注解有：`@Controller`, `@RequestMapping`, `@RequestParam`， `@ResponseBody` 等等。
 
 要理解 Spring 中的注解，先要理解 Java 中的注解。
 
@@ -294,7 +294,7 @@ Spring 中注解的处理基本都是通过实现接口 BeanPostProcessor 来进
 
 相关的处理类有： AutowiredAnnotationBeanPostProcessor，CommonAnnotationBeanPostProcessor，PersistenceAnnotationBeanPostProcessor，  RequiredAnnotationBeanPostProcessor
 
-这些处理类，可以通过 <context:annotation-config/> 配置隐式的配置进 Spring 容器。这些都是依赖注入的处理，还有生产 bean 的注解 (@Component， @Controller, @Service, @Repository) 的处理：
+这些处理类，可以通过 `<context:annotation-config/>` 配置隐式的配置进 Spring 容器。这些都是依赖注入的处理，还有生产 bean 的注解 (@Component， @Controller, @Service, @Repository) 的处理：
 
 	<context:component-scan base-package="net.aazj.service,net.aazj.aop" />
 

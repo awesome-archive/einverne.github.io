@@ -10,12 +10,27 @@ last_updated:
 
 这里全部是推广链接，如果你觉得我的文章有用，帮忙点击一下可好？
 
+## 腾讯云
+
+- <https://cloud.tencent.com/act/cps/redirect?redirect=10488&cps_key=60232db1ed2e2eb902049749db75573a&from=activity>
+
 ## 工具应用
 
 ### Trello
 看板应用
 
 - <https://trello.com/einverne/recommend>
+
+
+### NextDNS
+
+- <https://nextdns.io/?from=fgmesze4>
+
+
+### Pomotodo
+番茄工作法
+
+- <https://pomotodo.com/r/MFPLHRDX>
 
 ### Airbnb
 民宿
@@ -63,7 +78,7 @@ Dropbox 用到如今最好的网盘，我也[只推荐 Dropbox](/post/2015/07/dr
 - <http://www.right.com.cn/forum/?fromuser=einverne>
 
 ### pdawiki
-这是一个电子词典的论坛，goldendict 时获知，里面有各种电子词典分享，论坛中的人也很友好，千万不要注水
+这是一个电子词典的论坛，GoldenDict 时获知，里面有各种电子词典分享，论坛中的人也很友好，千万不要注水
 
 - <https://www.pdawiki.com/forum/?fromuser=288470>
 - <https://www.pdawiki.com/forum/thread-11779-1-1.html?x=288470>

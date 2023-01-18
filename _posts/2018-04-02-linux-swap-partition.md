@@ -4,7 +4,7 @@ title: "Linux 交换分区"
 tagline: ""
 description: "Linux 交换分区相关知识"
 category: Linux
-tags: [linux, swap, partition, ]
+tags: [linux, swap, partition, lvm, ]
 last_updated:
 ---
 
@@ -85,29 +85,29 @@ swap 分区大小设置
     64-256G 物理内存，SWAP 设置为 16G。
 
 ### 新建磁盘分区作为 swap 分区
-以 root 身份登入控制台，输入
+以 root 身份登入控制台，输入：
 
     swapoff -a              #停止所有的 swap 分区
 
-用 fdisk 命令对磁盘进行分区，添加 swap 分区，新建分区，在 fdisk 中用"t"命令将新添的分区 id 改为 82（Linux swap 类型），最后用 w 将操作实际写入硬盘
+用 fdisk 命令对磁盘进行分区，添加 swap 分区，新建分区，在 fdisk 中用"t"命令将新添的分区 id 改为 82（Linux swap 类型），最后用 w 将操作实际写入硬盘：
 
     fdisk /dev/sdb
 
-格式化 swap 分区，这里的 sdb2 要看您加完后 p 命令显示的实际分区设备名
+格式化 swap 分区，这里的 sdb2 要看，加完后 p 命令显示的实际分区设备名：
 
     mkswap /dev/sdb2
 
-启动新的 swap 分区
+启用新的 swap 分区：
 
     swapon /dev/sdb2
 
 为了让系统启动时能自动启用这个交换分区，可以编辑 `/etc/fstab`, 加入下面一行
 
-    /dev/sdb2 swap swap defaults 0 0
+    /dev/sdb2 none swap sw 0 0
 
 ### 使用文件作为 swap 分区
 
-创建要作为 swap 分区的文件：增加 1GB 大小的交换分区，则命令写法如下，其中的 count 等于想要的块的数量（bs*count= 文件大小）。
+创建要作为 swap 分区的文件：增加 1GB 大小的交换分区，则命令写法如下，其中的 count 等于想要的块的数量（bs*count= 文件大小）。注意这里的 `of` 后面的路径可以根据自己的环境变化。
 
     dd if=/dev/zero of=/root/swapfile bs=1M count=1024
 
@@ -121,5 +121,5 @@ swap 分区大小设置
 
 使系统开机时自启用，在文件 /etc/fstab 中添加一行：
 
-    /root/swapfile swap swap defaults 0 0
+    /root/swapfile none swap sw 0 0
 

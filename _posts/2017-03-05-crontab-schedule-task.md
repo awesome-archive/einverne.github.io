@@ -1,15 +1,16 @@
 ---
 layout: post
 title: "每天学习一个命令：crontab 定时任务"
+aliases: "每天学习一个命令：crontab 定时任务"
 tagline: ""
 description: ""
-category: 学习笔记
+category: 每天学习一个命令
 tags: [linux, command, cron, crontab, scheduler, period]
 last_updated:
 ---
 
 
-通过 crontab 命令，我们可以在固定的时间点或者特定时间间隔执行指定的系统指令或 shell 脚本。时间间隔的单位可以是分钟、小时、日、月、周及以上的任意组合。这个命令非常适合周期性的日志分析或数据备份等工作。
+通过 crontab 命令可以让我们在固定的时间点或者特定时间间隔执行指定的系统指令或 shell 脚本。时间间隔的单位可以是分钟、小时、日、月、周及以上的任意组合。这个命令非常适合周期性的日志分析或数据备份等工作。
 
 cron 的名字，没有特别明确的定义，cron 名字的由来是 Ken Thompson（Unix cron 的作者）说过的， cron 的名字由希腊语 time 的前缀 chron 得来 [^cronname]。
 
@@ -21,9 +22,9 @@ cron 守护进程是一个由实用程序和配置文件组成的小型子系统
 - 一个用来添加、修改和删除用户配置文件的实用程序
 - 以及一个简单的访问控制设施。
 
-一般来说，cron 配置文件或 cron 作业的列表被称为 crontab 或 cron 时间表。
+一般来说，cron 配置文件或 cron 任务列表被称为 crontab(cron table)。
 
-守护进程 cron 连续运行，每分钟检查一次配置文件中的修改。cron 读取系统范围的和针对用户的 crontab 、相应地更新事件调度计划并执行这一分钟内应该执行的所有命令。这个守护进程还捕捉每个作业的输出（如果有输出的话），并把结果通过电子邮件发送给作业的所有者。
+守护进程 cron 连续运行，每分钟检查一次配置文件中的修改。cron 读取系统范围的和针对用户的 crontab 、相应地更新事件调度计划并执行这一分钟内应该执行的所有命令。这个守护进程还会获取每个作业的输出（如果有输出的话），并把结果通过电子邮件发送给作业的所有者。
 
 可以在三个位置定义与系统相关的作业：`/etc/crontab`、`/etc/cron.d` 中的任何文件以及特殊目录 /etc/cron.hourly、/etc/cron.daily、/etc/cron.weekly 和 /etc/cron.monthly：
 
@@ -229,7 +230,7 @@ cron 在 `/var/log/syslog` 中有相关日志，可以使用 `tailf /var/log/sys
 
 ### 环境变量问题
 
-cron 使用 /usr/bin/sh 的命令，默认有以下内置变量：
+cron 使用 `/usr/bin/sh` 的命令，默认有以下内置变量：
 
     HOME=user home directory
     LOGNAME=user's login id
@@ -262,7 +263,18 @@ cron 使用 /usr/bin/sh 的命令，默认有以下内置变量：
 
     0 */3 * * * /usr/local/apache2/apachectl restart >/dev/null 2>&1
 
-"/dev/null 2>&1"表示先将标准输出重定向到 /dev/null，然后将标准错误重定向到标准输出，由于标准输出已经重定向到了 /dev/null，因此标准错误也会重定向到 /dev/null，这样日志输出问题就解决了。
+"/dev/null 2>&1" 表示先将标准输出重定向到 /dev/null，然后将标准错误重定向到标准输出，由于标准输出已经重定向到了 /dev/null，因此标准错误也会重定向到 /dev/null，这样日志输出问题就解决了。
+
+将这条语句拆解开来看：
+
+- `>` 是重定向符
+- `/dev/null` 是一个黑洞，任何发送给它的数据都会被丢弃
+- `2` 是标准错误的文件描述符
+- `>` 同上
+- `&` symbol for file descriptor
+- `1` 标准输出描述符
+
+可以参考 [Linux IO Redirection](http://www.tldp.org/LDP/abs/html/io-redirection.html) 来了解更多。
 
 ### 系统级任务调度与用户级任务调度
 
@@ -281,7 +293,20 @@ Ubuntu/Mint 下启动、停止与重启 cron:
     sudo /etc/init.d/cron stop
     sudo /etc/init.d/cron restart
 
+## crontab @reboot
+如果想要系统在重启之后执行某个脚本，通过 crontab 可以实现：
 
+编辑 crontab:
+
+```
+crontab -e
+```
+
+然后加入：
+```
+@reboot /usr/local/xxxxx
+@reboot /usr/local/xxxxx.sh
+```
 
 ## reference
 
